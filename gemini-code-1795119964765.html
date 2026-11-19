@@ -1,0 +1,2745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results-Based ToC & AI for Proposals — Online Course</title>
+    <style>
+        :root {
+            --primary: #004aad;
+            --primary-dark: #003380;
+            --secondary: #fca311;
+            --dark: #14213d;
+            --light: #e5e5e5;
+            --bg: #f4f7f6;
+            --success: #28a745;
+            --warning: #d97706;
+            --danger: #dc3545;
+            --paypal: #0070ba;
+            --telebirr: #00a859;
+            --cbebirr: #6a1b9a;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: #333; line-height: 1.6; }
+
+        /* Navigation */
+        nav { background: var(--dark); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        nav h1 { font-size: 1.2rem; cursor: pointer; }
+        .nav-buttons button { background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; margin-left: 0.5rem; cursor: pointer; border-radius: 4px; font-weight: 600; }
+        .nav-buttons button:hover { background: var(--primary-dark); }
+
+        /* Containers */
+        .container { max-width: 1240px; margin: 2rem auto; padding: 0 1rem; }
+        .hidden { display: none !important; }
+
+        /* Landing Page */
+        .hero { text-align: center; padding: 3.5rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .hero h2 { color: var(--primary); font-size: 2.2rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.12rem; color: #555; max-width: 900px; margin: 0 auto 2rem; }
+        .price-tag { font-size: 1.45rem; font-weight: bold; color: var(--primary); margin-bottom: 0.4rem; display: block; }
+        .price-sub { color: #555; font-size: 1.05rem; display: block; margin-bottom: 1.5rem; }
+
+        .btn-main { background: var(--secondary); color: var(--dark); padding: 0.85rem 1.8rem; border: none; font-size: 1.05rem; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; }
+        .btn-main:hover { background: #e59400; }
+        .btn-sm { background: var(--primary); color: white; border: none; padding: 0.45rem 0.85rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; text-decoration: none; display: inline-block; }
+        .btn-sm:hover { background: var(--primary-dark); }
+        .btn-approve { background: var(--success); color: white; border: none; padding: 0.45rem 0.85rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+        .btn-approve:hover { opacity: 0.9; }
+        .btn-outline { background: white; color: var(--primary); border: 1px solid var(--primary); padding: 0.45rem 0.9rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem; text-decoration: none; display: inline-block; }
+        .btn-outline:hover { background: #eef4ff; }
+
+        /* Cards & Forms */
+        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.08); max-width: 680px; margin: auto; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: bold; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.95rem; }
+
+        .telebirr-box { background: #ecfdf5; border: 1px solid #10b981; border-left: 5px solid var(--telebirr); padding: 0.9rem 1rem; border-radius: 5px; margin: 1rem 0; font-size: 0.95rem; }
+        .pending-box { background: #fffbeb; border: 1px solid #f59e0b; border-left: 5px solid var(--warning); padding: 1.25rem; border-radius: 6px; margin-top: 1rem; text-align: left; }
+        .approved-link-box { background: #eef4ff; border: 1px solid var(--primary); padding: 0.75rem; border-radius: 5px; margin-top: 0.6rem; word-break: break-all; font-size: 0.9rem; }
+
+        /* Payment Options */
+        .payment-options { display: flex; gap: 0.8rem; margin-top: 1.2rem; flex-wrap: wrap; }
+        .payment-btn { flex: 1; min-width: 150px; padding: 0.95rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; color: white; font-size: 1rem; transition: 0.2s; }
+        .payment-btn:hover { opacity: 0.92; }
+        .telebirr { background: var(--telebirr); }
+        .cbebirr { background: var(--cbebirr); }
+        .paypal { background: var(--paypal); }
+
+        /* Student Dashboard Header & Tabs */
+        .dash-header { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .progress-bar-wrap { width: 100%; max-width: 320px; background: #e9ecef; border-radius: 20px; height: 12px; overflow: hidden; margin-top: 0.4rem; }
+        .progress-bar-fill { height: 100%; background: var(--success); width: 0%; transition: width 0.3s ease; }
+
+        .dash-tabs { display: flex; gap: 0.38rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .tab-btn { background: white; color: var(--dark); border: 1px solid #ccc; padding: 0.5rem 0.78rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.82rem; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Course Modules & Panels */
+        .course-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .module, .panel-card { background: white; border-left: 5px solid var(--primary); padding: 1.5rem; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); margin-bottom: 1.25rem; }
+        .module-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+        .module h3, .panel-card h3 { color: var(--dark); margin-bottom: 0.35rem; }
+        .badge { display: inline-block; padding: 0.25rem 0.65rem; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-done { background: #d4edda; color: #155724; }
+
+        .content-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 0.9rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .content-box h4 { font-size: 0.94rem; color: var(--dark); margin-bottom: 0.4rem; }
+        .content-box ul { margin-left: 1.2rem; }
+        .content-box li { margin-bottom: 0.32rem; font-size: 0.9rem; }
+        .content-box a, .panel-card a { color: var(--primary); text-decoration: underline; font-weight: 600; }
+        .content-box a:hover, .panel-card a:hover { color: var(--primary-dark); }
+
+        .notes-box { margin-top: 0.8rem; font-size: 0.92rem; color: #444; background: #fff; border: 1px dashed #cbd5e1; padding: 0.75rem 1rem; border-radius: 5px; }
+        .prompt-box { background: #fffbeb; border-left: 3px solid var(--secondary); padding: 0.7rem 0.9rem; margin-top: 0.75rem; border-radius: 3px; font-size: 0.93rem; }
+        .prompt-card-item { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid var(--primary); padding: 0.75rem 1rem; border-radius: 4px; margin-bottom: 0.75rem; }
+        .text-reading-block { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem 1.2rem; margin-top: 0.75rem; white-space: pre-line; font-size: 0.94rem; }
+
+        /* Handwritten Notes Style */
+        .handwritten-sheet {
+            background-color: #fffdf5;
+            background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(0, 74, 173, 0.14) 32px);
+            border: 1px solid #e2d9b7;
+            border-left: 6px solid #c0392b;
+            border-radius: 6px;
+            padding: 1.25rem 1.4rem;
+            margin-top: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .handwritten-title { font-family: 'Brush Script MT', 'Segoe Script', 'Comic Sans MS', cursive; font-size: 1.45rem; color: #1a365d; margin-bottom: 0.4rem; }
+        .handwritten-body { font-family: 'Segoe Script', 'Comic Sans MS', cursive; font-size: 1.05rem; color: #1e293b; line-height: 2rem; }
+        .handwritten-body ul { margin-left: 1.4rem; }
+
+        /* Icons with Notes Grid */
+        .icon-notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 0.9rem; }
+        .icon-note-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1rem; display: flex; gap: 0.85rem; align-items: flex-start; }
+        .icon-badge { width: 46px; height: 46px; min-width: 46px; border-radius: 12px; background: #eef4ff; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.45rem; }
+        .icon-note-card h4 { color: var(--dark); font-size: 0.96rem; margin-bottom: 0.25rem; }
+        .icon-note-card p { font-size: 0.88rem; color: #475569; }
+
+        /* Audio Notes Cards */
+        .audio-card { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid var(--primary); border-radius: 6px; padding: 1rem 1.2rem; margin-top: 0.9rem; }
+        .audio-script-box { background: white; border: 1px solid #e2e8f0; border-radius: 5px; padding: 0.75rem 1rem; margin-top: 0.6rem; font-size: 0.92rem; color: #334155; }
+
+        /* Infographic & Visual Image Cards */
+        .infographic-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-top: 1rem; }
+        .infographic-steps { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-top: 0.75rem; }
+        .info-pill { background: white; border: 2px solid var(--primary); color: var(--dark); padding: 0.55rem 0.9rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; }
+        .info-arrow { font-weight: 700; color: var(--secondary); font-size: 1.2rem; }
+        .visual-diagram-wrap { margin-top: 0.9rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.9rem; text-align: center; }
+        .visual-diagram-wrap svg { max-width: 100%; height: auto; }
+
+        /* External & Tools Cards */
+        .ext-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 0.9rem; }
+        .ext-card { background: #f8fafc; border: 1px solid #cbd5e1; border-top: 4px solid var(--primary); border-radius: 6px; padding: 1rem; }
+        .ext-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 4px; background: #e0ecff; color: var(--primary-dark); margin-bottom: 0.45rem; }
+        .ext-card h4 { color: var(--dark); font-size: 0.98rem; margin-bottom: 0.35rem; }
+        .ext-card p { font-size: 0.88rem; color: #475569; margin-bottom: 0.6rem; }
+
+        /* PPT Slide Deck Styles */
+        .ppt-stage { background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 100%); color: white; border-radius: 8px; padding: 2rem; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: inset 0 0 0 2px rgba(252, 163, 17, 0.45); }
+        .ppt-slide-tag { display: inline-block; background: var(--secondary); color: var(--dark); font-weight: 700; font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.6rem; }
+        .ppt-slide-title { font-size: 1.45rem; font-weight: 700; margin-bottom: 0.75rem; color: #fff; }
+        .ppt-slide-bullets { margin-left: 1.3rem; font-size: 0.98rem; line-height: 1.65; }
+        .ppt-slide-bullets li { margin-bottom: 0.35rem; }
+        .ppt-speaker-notes { background: #fffbeb; border-left: 4px solid var(--secondary); border-radius: 6px; padding: 0.85rem 1rem; margin-top: 0.9rem; font-size: 0.9rem; color: #334155; }
+        .ppt-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; gap: 0.6rem; flex-wrap: wrap; }
+
+        /* Flashcard Styles */
+        .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .flashcard { background: #fffdf7; border: 2px solid var(--primary); border-radius: 8px; padding: 1.2rem; min-height: 175px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .flashcard:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0,0,0,0.08); }
+        .flashcard.flipped { background: #eef4ff; border-color: var(--dark); }
+        .flashcard-side { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 0.04em; }
+        .flashcard-text { font-size: 1rem; font-weight: 600; color: var(--dark); margin: 0.6rem 0; }
+        .flashcard-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #555; }
+
+        /* Mind Map Styles */
+        .mindmap-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-top: 0.8rem; }
+        .mindmap-center { background: var(--primary); color: white; padding: 0.7rem 1.1rem; border-radius: 24px; display: inline-block; font-weight: 700; font-size: 1rem; margin-bottom: 1rem; }
+        .mindmap-branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0.9rem; }
+        .mindmap-branch { background: white; border-left: 4px solid var(--secondary); border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; border-radius: 6px; padding: 0.85rem 1rem; }
+        .mindmap-branch-title { font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .mindmap-branch ul { margin-left: 1.1rem; font-size: 0.88rem; color: #334155; }
+        .mindmap-branch li { margin-bottom: 0.25rem; }
+
+        /* Handout Styles */
+        .handout-box { background: #fffef9; border: 1px solid #e2e8f0; border-left: 4px solid var(--success); border-radius: 6px; padding: 1.1rem 1.25rem; margin-top: 0.8rem; }
+        .handout-box h4 { color: var(--dark); margin-bottom: 0.4rem; }
+        .handout-box ul { margin-left: 1.25rem; font-size: 0.92rem; }
+        .handout-box li { margin-bottom: 0.3rem; }
+
+        /* Quiz & Assignment Boxes */
+        .activity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1.1rem; border-top: 1px solid #eee; padding-top: 1rem; }
+        .quiz-box, .assign-box { background: #fafbfc; border: 1px solid #e1e4e8; border-radius: 6px; padding: 1rem; }
+        .quiz-box h4, .assign-box h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1rem; }
+        .quiz-option { display: block; margin: 0.4rem 0; font-size: 0.92rem; cursor: pointer; }
+        .quiz-feedback { margin-top: 0.5rem; font-size: 0.88rem; font-weight: 600; }
+
+        /* Resource Reader Panel */
+        .resource-reader { background: white; border: 2px solid var(--primary); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .resource-reader-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.6rem; margin-bottom: 0.9rem; gap: 1rem; flex-wrap: wrap; }
+        .resource-reader-body { font-size: 0.95rem; color: #333; }
+        .resource-reader-body ul { margin-left: 1.3rem; margin-top: 0.4rem; }
+        .resource-reader-body li { margin-bottom: 0.3rem; }
+
+        /* Printable Worksheets */
+        .worksheet-card { background: white; padding: 1.75rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+        .worksheet-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+        .ws-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+        .ws-table th, .ws-table td { border: 1px solid #cbd5e1; padding: 0.6rem; text-align: left; vertical-align: top; font-size: 0.92rem; }
+        .ws-table th { background: var(--dark); color: white; }
+        .ws-input { width: 100%; border: 1px solid #e2e8f0; padding: 0.45rem; border-radius: 3px; font-size: 0.9rem; min-height: 48px; resize: vertical; }
+        .tree-box { border: 2px solid var(--dark); border-radius: 6px; padding: 0.8rem; margin-bottom: 0.7rem; background: #fffdf7; }
+        .tree-box.core { background: #eef4ff; border-color: var(--primary); }
+        .tree-label { font-weight: bold; color: var(--dark); display: block; margin-bottom: 0.3rem; font-size: 0.92rem; }
+
+        /* Admin Panel */
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: white; }
+        .admin-table th, .admin-table td { padding: 0.85rem 1rem; border: 1px solid #ddd; text-align: left; font-size: 0.9rem; }
+        .admin-table th { background: var(--dark); color: white; }
+        .sms-log { background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1.5rem; }
+        .sms-item { border-bottom: 1px solid #eee; padding: 0.6rem 0; font-size: 0.9rem; }
+
+        /* Certificate */
+        .certificate-box { background: white; padding: 3rem 2rem; border: 10px solid var(--secondary); text-align: center; max-width: 820px; margin: auto; box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
+        .certificate-box h2 { font-size: 2.3rem; color: var(--dark); margin-bottom: 0.8rem; }
+        .logo-container { width: 124px; height: 124px; background: #eef4ff; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--dark); border-radius: 50%; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 3px 8px rgba(0,0,0,0.08); }
+        .logo-container img { width: 100%; height: 100%; object-fit: cover; }
+        .certificate-box h3 { font-size: 2rem; color: var(--primary); margin: 1rem 0; text-decoration: underline; }
+        .cert-issuer-link { display: inline-block; margin-top: 0.6rem; color: var(--primary); font-weight: 700; text-decoration: underline; font-size: 0.95rem; word-break: break-all; }
+
+        @media print {
+            nav, .no-print, .dash-header, .dash-tabs, .resource-reader { display: none !important; }
+            body { background: white; }
+            .worksheet-card, .certificate-box, .handout-box, .handwritten-sheet { box-shadow: none; border: 1px solid #999; page-break-inside: avoid; }
+            .certificate-box { border: 8px solid var(--secondary); }
+            .ws-input { border: none; resize: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="no-print">
+        <h1 onclick="showView('landing')">🎓 ToC & Proposals Academy</h1>
+        <div class="nav-buttons">
+            <button onclick="showAdminLogin()">Admin Portal</button>
+            <button onclick="showView('landing')">Home</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- LANDING PAGE -->
+        <div id="view-landing">
+            <div class="hero">
+                <h2>Results-Based Theory of Change & AI for Proposals</h2>
+                <p>Complete online training with <strong>Detailed Presentations</strong>, <strong>Audio Notes</strong>, <strong>AI & Video Tools</strong>, <strong>Icons with Notes</strong>, <strong>Handouts</strong>, <strong>Handwritten Notes</strong>, <strong>Infographics & Images</strong>, <strong>Flashcards</strong>, <strong>Mind Maps</strong>, <strong>External Resources</strong>, and <strong>Questions & Quizzes</strong>. Certificates are issued via <a href="https://mohammedscho2023.github.io/MT-consultancy-2026/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:700; text-decoration:underline;">MT Consultancy 2026</a>. Payments go to Telebirr <strong>0917106325</strong>, notify Admin via SMS, and unlock access via an <strong>Admin-Approved Link</strong>.</p>
+                <div style="margin-bottom: 2rem;">
+                    <span class="price-tag">Registration Fee: <span id="display-reg-price-etb">10</span> Birr <span style="font-size:1rem; color:#666;">| $<span id="display-reg-price-usd">0.20</span> USD</span></span>
+                    <span class="price-sub">Official Certificate (MT Consultancy Logo): <span id="display-cert-price-etb">100</span> Birr | $<span id="display-cert-price-usd">2.00</span> USD</span>
+                </div>
+                <button class="btn-main" onclick="showView('register')">Register & Pay via Telebirr</button>
+            </div>
+        </div>
+
+        <!-- REGISTRATION PAGE -->
+        <div id="view-register" class="hidden">
+            <div class="card">
+                <h2 style="text-align: center; margin-bottom: 1rem;">Course Registration</h2>
+                <div class="telebirr-box">
+                    <strong>Telebirr Payment Recipient:</strong> <span id="telebirr-target-display">0917106325</span><br>
+                    <span>After paying, an SMS alert is sent to Admin (<strong>0917106325</strong>). Access unlocks once Admin approves and sends your <strong>Admin-Approved Link</strong>.</span>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="reg-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number (Sender Telebirr / CBE Birr)</label>
+                    <input type="text" id="reg-phone" placeholder="09...">
+                </div>
+                <div class="form-group">
+                    <label>Telebirr / Payment Transaction Reference (Optional)</label>
+                    <input type="text" id="reg-txref" placeholder="e.g., TX123456789">
+                </div>
+
+                <h3 style="text-align: center; margin-top: 1.2rem; margin-bottom: 0.4rem;">Send Registration Payment to 0917106325</h3>
+                <p style="text-align: center; font-weight: bold; margin-bottom: 1rem;">
+                    Registration Fee: <span id="pay-reg-price-etb">10</span> Birr | $<span id="pay-reg-price-usd">0.20</span> USD
+                </p>
+
+                <div class="payment-options">
+                    <button class="payment-btn telebirr" onclick="processPayment('Registration', 'Telebirr', 'ETB')">Pay Telebirr (0917106325)</button>
+                    <button class="payment-btn cbebirr" onclick="processPayment('Registration', 'CBE Birr', 'ETB')">CBE Birr</button>
+                    <button class="payment-btn paypal" onclick="processPayment('Registration', 'PayPal', 'USD')">PayPal (USD)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PENDING ADMIN APPROVAL VIEW -->
+        <div id="view-pending" class="hidden">
+            <div class="card" style="text-align: center;">
+                <h2 style="color: var(--warning); margin-bottom: 0.6rem;">⏳ Awaiting Admin Approval</h2>
+                <p id="pending-message" style="color: #444;"></p>
+                <div class="pending-box">
+                    <p><strong>Payment Sent To:</strong> Telebirr <strong>0917106325</strong></p>
+                    <p><strong>Admin SMS Alert Status:</strong> <span id="pending-sms-status" style="color: var(--success); font-weight: bold;">Sent / Logged for 0917106325</span></p>
+                    <p style="margin-top: 0.4rem;"><strong>Access Status:</strong> <span id="pending-access-status" class="badge badge-pending">Pending Admin Approval</span></p>
+                    <div id="pending-approved-link-area" class="hidden">
+                        <p style="margin-top: 0.75rem; font-weight: bold; color: var(--success);">✓ Approved! Your Admin-Approved Access Link is ready:</p>
+                        <div class="approved-link-box">
+                            <a id="pending-approved-link-anchor" href="javascript:void(0)" onclick="openApprovedDestination(); return false;" style="color: var(--primary); font-weight: bold; text-decoration: underline;"></a>
+                        </div>
+                        <div style="margin-top: 0.75rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                            <button class="btn-approve" onclick="openApprovedDestination()">Open Approved Access</button>
+                            <button class="btn-outline" onclick="copyApprovedLink()">Copy Link</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1.4rem; display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap;">
+                    <button class="btn-sm" onclick="checkApprovalStatus()">Refresh Approval Status</button>
+                    <button class="btn-outline" onclick="showAdminLogin()">Admin Portal (Approve)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STUDENT COURSE DASHBOARD -->
+        <div id="view-course" class="hidden">
+            <div class="dash-header no-print">
+                <div>
+                    <h2 style="color: var(--primary);">Welcome, <span id="student-name-display"></span>! <span class="badge badge-done">Admin-Approved Access</span></h2>
+                    <p style="font-size: 0.9rem; color: #555;">Explore <strong>Modules</strong>, <strong>Detailed Presentations</strong>, <strong>Audio Notes</strong>, <strong>AI & Video Tools</strong>, <strong>Icons with Notes</strong>, <strong>Handouts</strong>, <strong>Handwritten Notes</strong>, <strong>Infographics</strong>, <strong>Flashcards</strong>, <strong>Mind Maps</strong>, <strong>External Resources</strong>, <strong>Questions & Quizzes</strong>, <strong>Downloads</strong>, and <strong>Worksheets</strong>.</p>
+                </div>
+                <div>
+                    <strong style="font-size: 0.9rem;">Course Progress: <span id="progress-text">0/6 Modules</span></strong>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar-fill" id="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation Tabs -->
+            <div class="dash-tabs no-print">
+                <button class="tab-btn active" id="tab-btn-modules" onclick="switchDashTab('modules')">📚 Modules</button>
+                <button class="tab-btn" id="tab-btn-ppt" onclick="switchDashTab('ppt')">🖥️ Detailed PPT</button>
+                <button class="tab-btn" id="tab-btn-audio" onclick="switchDashTab('audio')">🎧 Audio Notes</button>
+                <button class="tab-btn" id="tab-btn-tools" onclick="switchDashTab('tools')">🛠️ AI & Video Tools</button>
+                <button class="tab-btn" id="tab-btn-icons" onclick="switchDashTab('icons')">🏷️ Icons & Notes</button>
+                <button class="tab-btn" id="tab-btn-handouts" onclick="switchDashTab('handouts')">📄 Handouts</button>
+                <button class="tab-btn" id="tab-btn-handwritten" onclick="switchDashTab('handwritten')">✍️ Handwritten</button>
+                <button class="tab-btn" id="tab-btn-infographics" onclick="switchDashTab('infographics')">📊 Infographics</button>
+                <button class="tab-btn" id="tab-btn-flashcards" onclick="switchDashTab('flashcards')">🃏 Flashcards</button>
+                <button class="tab-btn" id="tab-btn-mindmaps" onclick="switchDashTab('mindmaps')">🧠 Mind Maps</button>
+                <button class="tab-btn" id="tab-btn-external" onclick="switchDashTab('external')">🌐 Videos, Books & Blogs</button>
+                <button class="tab-btn" id="tab-btn-quizzes" onclick="switchDashTab('quizzes')">❓ Questions & Quizzes</button>
+                <button class="tab-btn" id="tab-btn-text" onclick="switchDashTab('text')">📝 Text</button>
+                <button class="tab-btn" id="tab-btn-downloads" onclick="switchDashTab('downloads')">⬇️ Downloads</button>
+                <button class="tab-btn" id="tab-btn-worksheets" onclick="switchDashTab('worksheets')">🖨️ Worksheets</button>
+            </div>
+
+            <!-- Live Hyperlinked Lesson, Resource & Prompt Library Viewer -->
+            <div id="resource-reader" class="resource-reader hidden no-print">
+                <div class="resource-reader-header">
+                    <h3 id="reader-title" style="color: var(--primary);">Toolkit Resource</h3>
+                    <div style="display:flex; gap:0.5rem; align-items:center;">
+                        <button class="btn-sm" id="reader-download-btn" onclick="downloadCurrentReaderGuide()">⬇️ Download (.txt)</button>
+                        <button class="btn-outline" onclick="closeResourceReader()">✕ Close</button>
+                    </div>
+                </div>
+                <div class="resource-reader-body" id="reader-body"></div>
+            </div>
+
+            <!-- TAB 1: MODULES, QUIZZES & ASSIGNMENTS -->
+            <div id="dash-tab-modules">
+                <div class="course-grid" id="modules-container"></div>
+
+                <div class="no-print" style="text-align: center; margin-top: 2.5rem; background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.06);">
+                    <p style="margin-bottom: 0.8rem; color: #444;">Finished the modules? Pay the certificate fee to Telebirr <strong>0917106325</strong> for your certificate from <a href="https://mohammedscho2023.github.io/MT-consultancy-2026/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:700; text-decoration:underline;">MT Consultancy 2026</a>.</p>
+                    <button class="btn-main" onclick="showView('certificate-prompt')">Request Certificate & Pay</button>
+                </div>
+            </div>
+
+            <!-- TAB 2: DETAILED PPT PRESENTATION DECK (24 SLIDES + SPEAKER NOTES) -->
+            <div id="dash-tab-ppt" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
+                        <div>
+                            <h3>🖥️ Detailed Lesson Presentation Deck (4 Slides per Module)</h3>
+                            <p style="font-size:0.9rem; color:#555;">Step through detailed slides with speaker notes, jump directly to any slide, or download the full deck.</p>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+                            <select id="ppt-module-select" onchange="selectPptModule(this.value)" style="padding:0.45rem; border-radius:4px; border:1px solid #ccc;">
+                                <option value="1">Module 1: RBM & ToC Foundations (4 Slides)</option>
+                                <option value="2">Module 2: Situation & Problem Tree (4 Slides)</option>
+                                <option value="3">Module 3: Impact, Outcomes & Accountability (4 Slides)</option>
+                                <option value="4">Module 4: Pathway, Assumptions & Evidence (4 Slides)</option>
+                                <option value="5">Module 5: SMART Indicators & Lenses (4 Slides)</option>
+                                <option value="6">Module 6: MEAL, Narrative & Readiness (4 Slides)</option>
+                            </select>
+                            <button class="btn-sm" onclick="downloadAllPptSlides()">⬇️ Download Detailed Deck (.txt)</button>
+                        </div>
+                    </div>
+
+                    <div class="ppt-stage" id="ppt-slide-stage"></div>
+                    <div class="ppt-speaker-notes" id="ppt-speaker-notes-box"></div>
+
+                    <div class="ppt-controls no-print">
+                        <div style="display:flex; gap:0.5rem;">
+                            <button class="btn-outline" onclick="prevPptSlide()">← Previous Slide</button>
+                            <button class="btn-sm" onclick="nextPptSlide()">Next Slide →</button>
+                        </div>
+                        <span id="ppt-slide-counter" style="font-weight:700; color:var(--dark);">Slide 1 of 4</span>
+                        <div id="ppt-slide-pills" style="display:flex; gap:0.35rem; flex-wrap:wrap;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: AUDIO NOTES & SPEECH READ-ALOUD -->
+            <div id="dash-tab-audio" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>🎧 Audio Notes & Listen-Aloud Narration</h3>
+                            <p style="font-size:0.9rem; color:#555;">Listen to each module's audio briefing using built-in voice synthesis or read/download the audio script.</p>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+                            <label style="font-size:0.85rem; font-weight:600;">Speed:
+                                <select id="audio-rate-select" style="padding:0.35rem; border-radius:4px; border:1px solid #ccc;">
+                                    <option value="0.85">0.85x (Slow)</option>
+                                    <option value="1" selected>1.0x (Normal)</option>
+                                    <option value="1.15">1.15x (Fast)</option>
+                                </select>
+                            </label>
+                            <button class="btn-outline" onclick="stopAudioNarration()">⏹ Stop Audio</button>
+                            <button class="btn-sm" onclick="downloadAllAudioScripts()">⬇️ Download Audio Scripts (.txt)</button>
+                        </div>
+                    </div>
+                    <div id="audio-notes-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 4: AI TOOLS & VIDEO TOOLS -->
+            <div id="dash-tab-tools" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>🛠️ AI Tools & Video Production Tools for Proposals & ToC</h3>
+                            <p style="font-size:0.9rem; color:#555;">Practical AI assistants and video/presentation tools paired with responsible usage rules.</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadToolsDirectory()">⬇️ Download Tools Guide (.txt)</button>
+                    </div>
+                    <div class="ext-grid" id="tools-directory-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 5: ICONS WITH NOTES -->
+            <div id="dash-tab-icons" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>🏷️ Core RBM & Proposal Icons with Notes</h3>
+                            <p style="font-size:0.9rem; color:#555;">Quick visual icons paired with concise margin notes for rapid recall.</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadIconsNotes()">⬇️ Download Icons & Notes (.txt)</button>
+                    </div>
+                    <div class="icon-notes-grid" id="icons-notes-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 6: HANDBOOKS & HANDOUTS -->
+            <div id="dash-tab-handouts" class="hidden">
+                <div class="panel-card">
+                    <h3>📄 Course Handouts & Handbooks</h3>
+                    <p>Read structured learner handouts for every module, open detailed handbook guides, or print/download them.</p>
+                    <div style="margin: 0.75rem 0; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <button class="btn-sm" onclick="downloadAllHandouts()">⬇️ Download All Handouts (.txt)</button>
+                        <button class="btn-outline" onclick="downloadAllHandbooks()">⬇️ Download Complete Handbooks (.txt)</button>
+                        <button class="btn-outline" onclick="window.print()">🖨️ Print Handouts</button>
+                    </div>
+                    <div id="handouts-list-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 7: HANDWRITTEN NOTES -->
+            <div id="dash-tab-handwritten" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>✍️ Handwritten-Style Field & Study Notes</h3>
+                            <p style="font-size:0.9rem; color:#555;">Notebook margin sketches, quick reminders, and key rules across all 6 modules.</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadHandwrittenNotes()">⬇️ Download Handwritten Notes (.txt)</button>
+                    </div>
+                    <div id="handwritten-notes-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 8: INFOGRAPHICS & VISUAL IMAGES -->
+            <div id="dash-tab-infographics" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>📊 Infographics & Visual Diagrams</h3>
+                            <p style="font-size:0.9rem; color:#555;">Visual flow infographics and causal/results diagrams for quick reference.</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadInfographicsSummary()">⬇️ Download Infographics Guide (.txt)</button>
+                    </div>
+                    <div id="infographics-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 9: INTERACTIVE FLASHCARDS -->
+            <div id="dash-tab-flashcards" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>🃏 Interactive Study Flashcards</h3>
+                            <p style="font-size:0.9rem; color:#555;">Click any flashcard to flip between Term/Question and Definition/Answer.</p>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+                            <select id="flashcard-filter" onchange="renderFlashcards()" style="padding:0.45rem; border-radius:4px; border:1px solid #ccc;">
+                                <option value="all">All Modules (18 Cards)</option>
+                                <option value="1">Module 1 Cards</option>
+                                <option value="2">Module 2 Cards</option>
+                                <option value="3">Module 3 Cards</option>
+                                <option value="4">Module 4 Cards</option>
+                                <option value="5">Module 5 Cards</option>
+                                <option value="6">Module 6 Cards</option>
+                            </select>
+                            <button class="btn-outline" onclick="shuffleFlashcards()">🔀 Shuffle</button>
+                            <button class="btn-sm" onclick="downloadFlashcards()">⬇️ Download Cards (.txt)</button>
+                        </div>
+                    </div>
+                    <div class="flashcard-grid" id="flashcards-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 10: MIND MAPS -->
+            <div id="dash-tab-mindmaps" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>🧠 Visual Mind Maps by Module</h3>
+                            <p style="font-size:0.9rem; color:#555;">Visual concept branches linking core ideas, tools, AI prompts, and deliverables.</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadAllMindMaps()">⬇️ Download Mind Maps (.txt)</button>
+                    </div>
+                    <div id="mindmaps-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 11: EXTERNAL RESOURCES (VIDEO LINKS, BOOKS, BLOGS & RELEVANT RESOURCES) -->
+            <div id="dash-tab-external" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                        <div>
+                            <h3>🌐 External Resources: Video Links, Books, Blogs & Relevant Guides</h3>
+                            <p style="font-size:0.9rem; color:#555;">Curated external videos, books, practitioner blogs, and evaluation/proposal resources.</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadExternalResourcesList()">⬇️ Download Resources List (.txt)</button>
+                    </div>
+                    <div class="ext-grid" id="external-resources-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 12: EXPANDED QUESTIONS & QUIZZES BANK -->
+            <div id="dash-tab-quizzes" class="hidden">
+                <div class="panel-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
+                        <div>
+                            <h3>❓ Expanded Questions & Interactive Quiz Bank (12 Questions)</h3>
+                            <p style="font-size:0.9rem; color:#555;">Test your mastery across all 6 modules and answer deep donor-review reflection questions.</p>
+                        </div>
+                        <div>
+                            <span class="badge badge-done" id="bank-quiz-score-badge">Quiz Bank Score: 0 / 12 Answered</span>
+                        </div>
+                    </div>
+                    <div id="quiz-bank-container"></div>
+                    <div id="reflection-questions-container" style="margin-top:1.5rem;"></div>
+                </div>
+            </div>
+
+            <!-- TAB 13: FULL COURSE TEXT & PROMPTS -->
+            <div id="dash-tab-text" class="hidden">
+                <div class="panel-card">
+                    <h3>📝 Complete Course Text & Reference Notes</h3>
+                    <p>Read the full structured text across all 6 modules, or jump to Downloads to save offline files.</p>
+                    <div style="margin: 0.75rem 0; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <button class="btn-sm" onclick="downloadCourseText()">⬇️ Download Full Course Text (.txt)</button>
+                        <button class="btn-outline" onclick="switchDashTab('downloads')">Go to Downloads Tab</button>
+                    </div>
+                    <div id="full-course-text-container"></div>
+                </div>
+            </div>
+
+            <!-- TAB 14: DOWNLOADS HUB -->
+            <div id="dash-tab-downloads" class="hidden">
+                <div class="panel-card">
+                    <h3>⬇️ Course Downloads & Printable Exports</h3>
+                    <p>Every download link below generates and saves a study file directly to your device.</p>
+                    <div class="content-columns" style="margin-top: 1rem;">
+                        <div class="content-box">
+                            <h4>Slides, Audio, Handouts & Notes</h4>
+                            <ul>
+                                <li>🖥️ <a href="javascript:void(0)" onclick="downloadAllPptSlides(); return false;">Detailed PPT Deck Script (.txt)</a></li>
+                                <li>🎧 <a href="javascript:void(0)" onclick="downloadAllAudioScripts(); return false;">Audio Notes Scripts (.txt)</a></li>
+                                <li>📄 <a href="javascript:void(0)" onclick="downloadAllHandouts(); return false;">All Module Handouts (.txt)</a></li>
+                                <li>✍️ <a href="javascript:void(0)" onclick="downloadHandwrittenNotes(); return false;">Handwritten Notes (.txt)</a></li>
+                            </ul>
+                        </div>
+                        <div class="content-box">
+                            <h4>Tools, Icons, Maps, Cards & Text</h4>
+                            <ul>
+                                <li>🛠️ <a href="javascript:void(0)" onclick="downloadToolsDirectory(); return false;">AI & Video Tools Guide (.txt)</a></li>
+                                <li>🏷️ <a href="javascript:void(0)" onclick="downloadIconsNotes(); return false;">Icons with Notes (.txt)</a></li>
+                                <li>🧠 <a href="javascript:void(0)" onclick="downloadAllMindMaps(); return false;">All Module Mind Maps (.txt)</a></li>
+                                <li>🃏 <a href="javascript:void(0)" onclick="downloadFlashcards(); return false;">Study Flashcards Deck (.txt)</a></li>
+                            </ul>
+                        </div>
+                        <div class="content-box">
+                            <h4>External Links, Worksheets & PDF Print</h4>
+                            <ul>
+                                <li>🌐 <a href="javascript:void(0)" onclick="downloadExternalResourcesList(); return false;">Videos, Books & Blogs List (.txt)</a></li>
+                                <li>📝 <a href="javascript:void(0)" onclick="downloadCourseText(); return false;">Full Course Text & AI Prompts (.txt)</a></li>
+                                <li>📊 <a href="javascript:void(0)" onclick="downloadWorksheetsExport(); return false;">Saved Worksheets & Scorecard (.txt)</a></li>
+                                <li>🖨️ <a href="javascript:void(0)" onclick="switchDashTab('worksheets'); setTimeout(() => window.print(), 200); return false;">Open & Print Worksheets as PDF</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 15: PRINTABLE TOOLKIT WORKSHEETS -->
+            <div id="dash-tab-worksheets" class="hidden">
+                <div class="no-print" style="background: #eef4ff; border-left: 4px solid var(--primary); padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <span>Fill in your project details directly below. Entries auto-save in your browser and can be printed or exported as PDF.</span>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <button class="btn-outline" onclick="saveWorksheets()">Save All Worksheets</button>
+                        <button class="btn-outline" onclick="downloadWorksheetsExport()">⬇️ Download (.txt)</button>
+                        <button class="btn-sm" onclick="window.print()">🖨️ Print / Save PDF</button>
+                    </div>
+                </div>
+
+                <!-- Worksheet 1: Problem Tree -->
+                <div class="worksheet-card">
+                    <div class="worksheet-header">
+                        <h3>Worksheet 1: Problem Tree & Situation Analysis</h3>
+                        <span style="font-size: 0.85rem; color: #666;">Fill from bottom (Root Causes) to top (Effects)</span>
+                    </div>
+                    <div class="tree-box">
+                        <span class="tree-label">4. Effects (Consequences if nothing changes)</span>
+                        <textarea class="ws-input ws-field" id="ws-tree-effects" placeholder="e.g., High school dropout, lower lifetime earnings, continued cycle of poverty..."></textarea>
+                    </div>
+                    <div class="tree-box core">
+                        <span class="tree-label">3. Core Problem (Include data points; avoid describing as 'lack of our project')</span>
+                        <textarea class="ws-input ws-field" id="ws-tree-core" placeholder="e.g., Only 22% of girls in Grades 2–4 read at grade level in target districts..."></textarea>
+                    </div>
+                    <div class="tree-box">
+                        <span class="tree-label">2. Direct Causes (Immediate drivers of the core problem)</span>
+                        <textarea class="ws-input ws-field" id="ws-tree-direct" placeholder="e.g., Limited structured reading instruction, large class sizes, irregular attendance..."></textarea>
+                    </div>
+                    <div class="tree-box">
+                        <span class="tree-label">1. Root Causes (Underlying social, policy, economic, institutional, or environmental drivers)</span>
+                        <textarea class="ws-input ws-field" id="ws-tree-root" placeholder="e.g., Insufficient teacher coaching systems, household economic pressures, unsafe routes to school..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Worksheet 2: If-Then-Because Pathway -->
+                <div class="worksheet-card">
+                    <div class="worksheet-header">
+                        <h3>Worksheet 2: Pathway of Change (If–Then–Because Causal Chain)</h3>
+                        <span style="font-size: 0.85rem; color: #666;">Every arrow needs a clear mechanism ("because")</span>
+                    </div>
+                    <table class="ws-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">#</th>
+                                <th style="width: 28%;">IF (Condition / Output)</th>
+                                <th style="width: 28%;">THEN (Result / Outcome)</th>
+                                <th style="width: 29%;">BECAUSE (Mechanism)</th>
+                                <th style="width: 10%;">Evidence Ref</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><textarea class="ws-input ws-field" id="ws-if-1" placeholder="Teachers are trained & coached monthly..."></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-then-1" placeholder="Teachers apply structured reading methods..."></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-bec-1" placeholder="Practice changes when training has classroom follow-up..."></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-ev-1" placeholder="E1"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><textarea class="ws-input ws-field" id="ws-if-2"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-then-2"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-bec-2"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-ev-2" placeholder="E2"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><textarea class="ws-input ws-field" id="ws-if-3"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-then-3"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-bec-3"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-ev-3" placeholder="E3"></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Worksheet 3: Results Framework -->
+                <div class="worksheet-card">
+                    <div class="worksheet-header">
+                        <h3>Worksheet 3: Summary Results Framework & SMART Indicators</h3>
+                        <span style="font-size: 0.85rem; color: #666;">Disaggregate by sex, age, disability, and location</span>
+                    </div>
+                    <table class="ws-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 14%;">Result Level</th>
+                                <th style="width: 28%;">SMART Indicator</th>
+                                <th style="width: 14%;">Baseline</th>
+                                <th style="width: 14%;">Target</th>
+                                <th style="width: 18%;">Means of Verification</th>
+                                <th style="width: 12%;">Frequency</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Impact</strong></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-imp-ind" placeholder="% of learners meeting minimum standard..."></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-imp-base" placeholder="31%"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-imp-targ" placeholder="55%"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-imp-mov" placeholder="District assessment"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-imp-freq" placeholder="Endline"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Outcome 1</strong></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc1-ind"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc1-base"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc1-targ"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc1-mov"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc1-freq" placeholder="Annual"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Outcome 2</strong></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc2-ind"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc2-base"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc2-targ"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc2-mov"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-oc2-freq" placeholder="Termly"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Output 1.1</strong></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-out1-ind" placeholder="# of teachers completing training & 3+ coaching visits"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-out1-base" placeholder="0"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-out1-targ" placeholder="400"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-out1-mov" placeholder="Training & coaching logs"></textarea></td>
+                                <td><textarea class="ws-input ws-field" id="ws-rf-out1-freq" placeholder="Quarterly"></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Worksheet 4: Interactive Donor-Readiness Checklist -->
+                <div class="worksheet-card">
+                    <div class="worksheet-header">
+                        <h3>Worksheet 4: Interactive Donor-Readiness Scorecard</h3>
+                        <span id="checklist-score-badge" style="font-weight: bold; color: var(--primary);">Score: 0 / 34 (0%) — Aim for 85%+</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #555; margin-bottom: 0.8rem;">Score each criterion before submitting your proposal: <strong>2 = Fully met</strong>, <strong>1 = Partly met</strong>, <strong>0 = Not met</strong>.</p>
+                    <table class="ws-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 16%;">Area</th>
+                                <th style="width: 64%;">Donor-Readiness Criterion</th>
+                                <th style="width: 20%;">Score (0–2)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="checklist-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CERTIFICATE PROMPT -->
+        <div id="view-certificate-prompt" class="hidden">
+            <div class="card" style="text-align: center;">
+                <h2>Official Course Certificate</h2>
+                <p style="margin: 1rem 0;">Issued by <a href="https://mohammedscho2023.github.io/MT-consultancy-2026/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:700; text-decoration:underline;">MT Consultancy 2026</a> using the MT Consultancy logo. Send the certificate fee to Telebirr <strong>0917106325</strong>. Admin will receive an SMS alert and send your <strong>Admin-Approved Certificate Link</strong> upon approval.</p>
+                <div class="form-group" style="text-align: left; max-width: 400px; margin: 0 auto 1rem;">
+                    <label>Certificate Payment Txn Reference (Optional)</label>
+                    <input type="text" id="cert-txref" placeholder="e.g., CERT-TX987654">
+                </div>
+                <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-bottom: 1rem;">
+                    Certificate Fee: <span id="pay-cert-price-etb">100</span> Birr | $<span id="pay-cert-price-usd">2.00</span> USD
+                </p>
+                <div class="payment-options">
+                    <button class="payment-btn telebirr" onclick="processPayment('Certificate', 'Telebirr', 'ETB')">Pay Telebirr (0917106325)</button>
+                    <button class="payment-btn cbebirr" onclick="processPayment('Certificate', 'CBE Birr', 'ETB')">CBE Birr</button>
+                    <button class="payment-btn paypal" onclick="processPayment('Certificate', 'PayPal', 'USD')">PayPal (USD)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CERTIFICATE VIEW -->
+        <div id="view-certificate" class="hidden">
+            <div class="certificate-box" id="printable-cert">
+                <div class="logo-container" id="cert-logo-box"></div>
+                <h2>Certificate of Completion</h2>
+                <p>This is to certify that</p>
+                <h3 id="cert-name">Student Name</h3>
+                <p>has successfully completed the online training on</p>
+                <h4 style="font-size: 1.45rem; margin: 1rem 0; color: var(--dark);">Results-Based Theory of Change & AI for Proposals</h4>
+                <p>Issued on <span id="cert-date"></span> by <strong>MT Consultancy and Training PLC</strong></p>
+                <a id="cert-issuer-anchor" class="cert-issuer-link" href="https://mohammedscho2023.github.io/MT-consultancy-2026/" target="_blank" rel="noopener noreferrer">https://mohammedscho2023.github.io/MT-consultancy-2026/</a>
+            </div>
+            <div class="no-print" style="text-align: center; margin-top: 2rem;">
+                <button class="btn-main" onclick="window.print()">Download / Print PDF Certificate</button>
+            </div>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="view-admin" class="hidden">
+            <h2 style="color: var(--danger); margin-bottom: 1.5rem;">Admin Control Panel (Secured: 5402402 | Telebirr SMS Target: 0917106325)</h2>
+
+            <div class="admin-grid">
+                <!-- Price & Logo Settings -->
+                <div class="card" style="margin: 0; max-width: none;">
+                    <h3>Adjust Pricing, Telebirr & Certificate Logo</h3>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Registration Fee (ETB)</label>
+                            <input type="number" id="admin-reg-etb" value="10">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Registration Fee (USD)</label>
+                            <input type="number" step="0.01" id="admin-reg-usd" value="0.20">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Certificate Fee (ETB)</label>
+                            <input type="number" id="admin-cert-etb" value="100">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Certificate Fee (USD)</label>
+                            <input type="number" step="0.01" id="admin-cert-usd" value="2.00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Admin Telebirr / SMS Alert Number</label>
+                        <input type="text" id="admin-telebirr-phone" value="0917106325">
+                    </div>
+                    <div class="form-group">
+                        <label>Certificate Issuer Link</label>
+                        <input type="text" id="admin-cert-issuer-url" value="https://mohammedscho2023.github.io/MT-consultancy-2026/">
+                    </div>
+                    <div class="form-group">
+                        <label>Certificate Logo Text or Image URL</label>
+                        <input type="text" id="admin-cert-logo" placeholder="e.g. MT CONSULTANCY or https://.../logo.png">
+                    </div>
+                    <button class="btn-main" style="padding: 0.65rem 1rem; font-size: 1rem; width: 100%;" onclick="updateAdminSettings()">Save Settings</button>
+                </div>
+
+                <!-- Revenue Stats -->
+                <div class="card" style="margin: 0; max-width: none;">
+                    <h3>Approved Registrations & Revenue Summary</h3>
+                    <p style="margin-top: 1rem;">Total Submissions: <strong id="total-regs">0</strong> (Approved: <strong id="approved-regs">0</strong>)</p>
+                    <p>Approved Certificates: <strong id="total-certs">0</strong></p>
+                    <hr style="margin: 1rem 0; border: 0; border-top: 1px solid #ddd;">
+                    <p style="font-size: 1.15rem; color: var(--success);">Approved Revenue (ETB): <strong id="total-rev-etb">0</strong> Birr</p>
+                    <p style="font-size: 1.15rem; color: var(--paypal);">Approved Revenue (USD): <strong id="total-rev-usd">0.00</strong> USD</p>
+                </div>
+            </div>
+
+            <h3>Student Payments, Approval Controls & Cross-Device Admin-Approved Links</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-top: 0.3rem;">Copy and send the generated link below to the student via SMS/WhatsApp/Email—it works on any device or browser when deployed.</p>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Payment & Txn</th>
+                        <th>Registration Access</th>
+                        <th>Certificate Access</th>
+                        <th>Admin-Approved Link (Shareable)</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-student-list"></tbody>
+            </table>
+
+            <div class="sms-log">
+                <h4>📩 Admin SMS Alerts Dispatched to <span id="sms-log-target">0917106325</span></h4>
+                <div id="admin-sms-list"><p style="color:#666; margin-top:0.4rem;">No payment SMS alerts recorded yet.</p></div>
+            </div>
+
+            <button class="btn-main" style="background: var(--danger); color: white; margin-top: 1.5rem;" onclick="logout()">Logout Admin</button>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_CODE = "5402402";
+        const SIGN_SALT = "TOC_ACADEMY_5402402_VERIFIED";
+        const DEFAULT_CERT_ISSUER_URL = "https://mohammedscho2023.github.io/MT-consultancy-2026/";
+        let activeReaderKey = null;
+        let currentPptModuleId = 1;
+        let currentPptSlideIndex = 0;
+
+        /* Safe Storage Wrapper */
+        const memoryStore = {};
+        function safeGetItem(key) {
+            try {
+                return window.localStorage.getItem(key);
+            } catch (e) {
+                return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null;
+            }
+        }
+        function safeSetItem(key, val) {
+            memoryStore[key] = val;
+            try {
+                window.localStorage.setItem(key, val);
+            } catch (e) { /* fallback to memoryStore */ }
+        }
+        function safeRemoveItem(key) {
+            delete memoryStore[key];
+            try {
+                window.localStorage.removeItem(key);
+            } catch (e) { /* ignore */ }
+        }
+
+        /* Cross-Device Signed Approved Link Helpers */
+        function computeSignature(str) {
+            let h1 = 0xdeadbeef ^ str.length;
+            let h2 = 0x41c6ce57 ^ str.length;
+            for (let i = 0; i < str.length; i++) {
+                const ch = str.charCodeAt(i);
+                h1 = Math.imul(h1 ^ ch, 2654435761);
+                h2 = Math.imul(h2 ^ ch, 1597334677);
+            }
+            h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+            h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+            return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+        }
+
+        function encodePayload(obj) {
+            const json = JSON.stringify(obj);
+            const utf8 = encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode('0x' + p1));
+            return btoa(utf8).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        }
+
+        function decodePayload(b64) {
+            try {
+                let norm = b64.replace(/-/g, '+').replace(/_/g, '/');
+                while (norm.length % 4) norm += '=';
+                const bin = atob(norm);
+                const pct = Array.prototype.map.call(bin, c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('');
+                return JSON.parse(decodeURIComponent(pct));
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function buildApprovedLink(user, scope) {
+            const base = window.location.href.split('#')[0].split('?')[0];
+            const rawCore = `${user.id}|${user.name}|${user.phone}|${scope}|${SIGN_SALT}`;
+            const payload = {
+                id: user.id,
+                n: user.name,
+                e: user.email || "",
+                p: user.phone || "",
+                s: scope,
+                d: user.certApprovedDate || new Date().toLocaleDateString(),
+                l: config.certLogo || "MT CONSULTANCY",
+                u: config.certIssuerUrl || DEFAULT_CERT_ISSUER_URL,
+                sig: computeSignature(rawCore)
+            };
+            return `${base}#access=${encodePayload(payload)}`;
+        }
+
+        function parseAccessFromUrl() {
+            const searchParams = new URLSearchParams(window.location.search);
+            let encoded = searchParams.get('access');
+            if (!encoded && window.location.hash && window.location.hash.length > 1) {
+                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                encoded = hashParams.get('access');
+            }
+            if (!encoded) return null;
+
+            const data = decodePayload(encoded);
+            if (!data || !data.id || !data.n || !data.s || !data.sig) return null;
+
+            const expectedSig = computeSignature(`${data.id}|${data.n}|${data.p || ""}|${data.s}|${SIGN_SALT}`);
+            if (data.sig !== expectedSig) return null;
+            return data;
+        }
+
+        function activateSignedAccess(data) {
+            users = JSON.parse(safeGetItem('toc_users')) || users;
+            let user = users.find(u => u.id === data.id);
+            if (!user) {
+                user = {
+                    id: data.id,
+                    name: data.n,
+                    email: data.e || "",
+                    phone: data.p || "",
+                    regMethod: "Telebirr",
+                    regCurrency: "ETB",
+                    regAmount: `${config.regETB} Birr`,
+                    regTxRef: "Verified Link",
+                    regApproved: true,
+                    hasCertificate: data.s === 'cert',
+                    certPendingApproval: data.s === 'cert',
+                    certApproved: data.s === 'cert',
+                    certApprovedDate: data.d,
+                    completedQuizzes: {},
+                    assignments: {}
+                };
+                users.push(user);
+            } else {
+                user.regApproved = true;
+                if (data.s === 'cert') {
+                    user.certApproved = true;
+                    user.certPendingApproval = true;
+                    user.hasCertificate = true;
+                    user.certApprovedDate = data.d || user.certApprovedDate;
+                }
+            }
+            if (data.l) config.certLogo = data.l;
+            if (data.u) config.certIssuerUrl = data.u;
+            currentUser = user;
+            saveData();
+
+            if (data.s === 'cert') {
+                openCertificateView(user);
+            } else {
+                openCourseView(user);
+            }
+            return true;
+        }
+
+        const TOOLKIT_GUIDES = {
+            "handbook-overview": {
+                title: "Handbook Package & 8-Step Process (Toolkit pp. 2–5)",
+                plainText: "Three Core Handbook Parts: (1) ToC_Preparation_Template.docx, (2) AI Prompt Library — Proposals & Concept Notes.docx (50+ prompts, responsible AI: no invented data or citations), and (3) ToC Results Framework Workbook.xlsx.\n8-Step Process: Step 1 Describe project & analyze problem -> Step 2 Define impact & outcomes working backwards -> Step 3 Map pathway & if-then links -> Step 4 State assumptions & risks -> Step 5 Gather evidence -> Step 6 Set SMART indicators -> Step 7 Plan partners, lenses & MEAL -> Step 8 Write narrative & quality check.\nSix Golden Rules: Start from change, work backwards, one causal link with 'because', state assumptions, grade evidence, keep it simple.",
+                html: `<p><strong>Three Core Handbook Parts:</strong> (1) <em>ToC_Preparation_Template.docx</em>, (2) <em>AI Prompt Library — Proposals & Concept Notes.docx</em>, and (3) <em>ToC Results Framework Workbook.xlsx</em>.</p>
+                       <p style="margin-top:0.5rem;"><strong>8-Step Process:</strong> Project & problem analysis → Backward impact/outcomes → Pathway & If–Then–Because → Assumptions & risks → Evidence base → SMART indicators → Stakeholders, lenses & MEAL → Narrative & 85%+ readiness check.</p>
+                       <p style="margin-top:0.5rem;"><strong>Six Golden Rules:</strong> Start from change (not activity), work backwards, explain "because" per link, surface assumptions, grade evidence honestly, and keep the logic clean.</p>`
+            },
+            "terminology-snapshot": {
+                title: "Terminology Alignment & Section 1: Project Snapshot (Toolkit pp. 4–5)",
+                plainText: "Mirror Donor Terminology: Impact (Goal / Overall Objective), Outcome (Purpose / Specific Objective / Intermediate Outcome), Output (Deliverable / Immediate Result / Product), Activity (Action / Intervention / Task), Input (Resource).\nProject Snapshot Fields: Project title, Organisation & partners, Location & scale, Duration & budget, Primary & Secondary target groups, Sector & theme, Donor & call.",
+                html: `<p><strong>Mirror Donor Terminology:</strong> Impact (Goal / Overall Objective), Outcome (Purpose / Specific Objective / Intermediate Outcome), Output (Deliverable / Immediate Result / Product), Activity (Action / Intervention / Task), Input (Resource).</p>
+                       <p style="margin-top:0.5rem;"><strong>Project Snapshot Fields:</strong> Project title, Organisation & partners, Location & scale, Duration & budget, Primary & Secondary target groups, Sector & theme, Donor & call.</p>`
+            },
+            "problem-analysis": {
+                title: "Section 2: Situation & Problem Analysis + Problem Tree (Toolkit pp. 6–7)",
+                plainText: "Problem Statement: 1-3 sentences with at least one data point; describe the problem for people, never 'lack of our project'.\nProblem Tree (bottom to top): Root causes -> Direct causes -> Core problem -> Effects.",
+                html: `<p><strong>Problem Statement:</strong> 1–3 sentences with at least one data point; describe the problem for people, never "lack of our project".</p>
+                       <ul><li><strong>Problem Tree (bottom to top):</strong> Root Causes → Direct Causes → Core Problem → Effects.</li>
+                       <li><strong>Scope Boundaries:</strong> Define affected groups, context factors, existing gaps, and what is in-scope vs. out-of-scope.</li></ul>`
+            },
+            "impact-outcomes": {
+                title: "Section 3: Impact, Outcomes & Accountability Line + Appendix B (Toolkit pp. 7–8, 22)",
+                plainText: "Impact Statement: One sentence describing lasting change for a defined group.\nOutcome Wording: Use change verbs (improved, increased, reduced, strengthened, adopted, applied, gained) rather than activity verbs (train, conduct, organise, provide, deliver, distribute, implement).\nAccountability Line: Separate outputs/outcomes you are directly accountable for from long-term impact you contribute to.",
+                html: `<p><strong>Impact Statement:</strong> One sentence describing lasting change for a defined group that a donor cares about.</p>
+                       <p style="margin-top:0.4rem;"><strong>Outcome Wording:</strong> Use change verbs (<em>improved, increased, reduced, strengthened, adopted, applied, gained</em>) and avoid activity verbs (<em>train, conduct, organise, provide, deliver, distribute, implement</em>).</p>`
+            },
+            "pathway-evidence": {
+                title: "Sections 4–6: Pathway, If–Then–Because, Assumptions/Risks & Evidence (Toolkit pp. 9–13)",
+                plainText: "Backward Mapping: Start at Impact -> 3-5 Outcomes -> Outputs -> Activities -> Inputs.\nIf-Then-Because: State IF (condition), THEN (result), BECAUSE (mechanism), Evidence Ref.\nEvidence Ratings: Strong (High), Moderate (Medium), Emerging (Low).",
+                html: `<p><strong>If–Then–Because Chain:</strong> Every causal link needs a clear <em>because</em> mechanism and evidence reference.</p>
+                       <p style="margin-top:0.4rem;"><strong>Assumptions & Evidence:</strong> Track Causal, Contextual, and Delivery assumptions/risks and rate evidence as Strong, Moderate, or Emerging.</p>`
+            },
+            "rf-stakeholders-lenses": {
+                title: "Sections 7–8 & 10: Results Framework, Stakeholders & Cross-Cutting Lenses (Toolkit pp. 13–18)",
+                plainText: "SMART Indicators: Specific, Measurable, Achievable, Relevant, Time-bound, Practical. Disaggregate by sex, age, disability, and location.\nCross-Cutting Lenses: Gender equality, Disability & inclusion, Safeguarding & PSEA, Conflict sensitivity, Climate & environment, Local ownership.",
+                html: `<p><strong>SMART Indicators:</strong> Define baseline, target, means of verification, frequency, and disaggregation (sex, age, disability, location).</p>
+                       <p style="margin-top:0.4rem;"><strong>Cross-Cutting Lenses:</strong> Gender equality, Disability & inclusion, Safeguarding & PSEA, Conflict sensitivity, Climate & environment, and Local ownership.</p>`
+            },
+            "meal-narrative-checklist": {
+                title: "Sections 9, 11–12 & Appendices A & C: MEAL, Narrative, Readiness & Glossary (Toolkit pp. 16–23)",
+                plainText: "Narrative ToC (400-600 words): 6 paragraphs (Problem, Change Sought, How Change Happens, Why Our Approach, Assumptions/Risks, What Success Looks Like).\nDonor-Readiness Checklist: 17 items (max 34). Target 85%+ (29+ points) before submission.",
+                html: `<p><strong>6-Paragraph Narrative ToC (400–600 words):</strong> Problem → Change Sought → How Change Happens → Why Our Approach → Assumptions/Risks → What Success Looks Like.</p>
+                       <p style="margin-top:0.4rem;"><strong>Donor-Readiness Target:</strong> Score <strong>85%+</strong> (29/34+) on the 17-point scorecard before proposal submission.</p>`
+            },
+            "prompts-m1": {
+                title: "AI Prompt Library — Module 1: Proposal & Concept Note Framing Prompts",
+                plainText: "1. Donor Terminology Alignment: 'Map my project elements into Impact, Outcome, Output, Activity, and Input using the terminology of [donor/call] without inventing data: [paste notes]'\n2. Concept Note Fit Check: 'Check whether our proposed interventions address the target group's needs using only these facts: [paste draft]'",
+                html: `<div class="prompt-card-item"><strong>1. Donor Terminology Alignment:</strong><br><em>"Map my project elements into Impact, Outcome, Output, Activity, and Input using the terminology of [donor/call] without inventing data: [paste notes]"</em></div>
+                       <div class="prompt-card-item"><strong>2. Concept Note Fit Check:</strong><br><em>"Check whether our proposed interventions address the target group's needs using only these facts: [paste draft]"</em></div>`
+            },
+            "prompts-m2": {
+                title: "AI Prompt Library — Module 2: Problem Tree & Situation Analysis Prompts",
+                plainText: "1. Problem Tree Builder: 'Using strictly the data below, organize into Root Causes, Direct Causes, Core Problem, and Effects. Flag missing data: [paste facts]'\n2. Anti-Project-Bias Rewrite: 'Rewrite this problem statement in 2-3 data-backed sentences focused on affected people, removing \"lack of our project\": [paste draft]'",
+                html: `<div class="prompt-card-item"><strong>1. Problem Tree Builder:</strong><br><em>"Using strictly the data below, organize into Root Causes, Direct Causes, Core Problem, and Effects. Flag missing data: [paste facts]"</em></div>
+                       <div class="prompt-card-item"><strong>2. Anti-Project-Bias Rewrite:</strong><br><em>"Rewrite this problem statement in 2–3 data-backed sentences focused on affected people, removing 'lack of our project': [paste draft]"</em></div>`
+            },
+            "prompts-m3": {
+                title: "AI Prompt Library — Module 3: Impact, Outcome & Accountability Line Prompts",
+                plainText: "1. Outcome Wording Audit: 'Rewrite into strong outcome statements using change verbs (improved, increased, reduced, strengthened, adopted) with who, what, and when: [paste statements]'\n2. Accountability Line: 'Separate outputs/outcomes we are directly accountable for from impact we contribute to: [paste results]'",
+                html: `<div class="prompt-card-item"><strong>1. Outcome Wording Audit:</strong><br><em>"Rewrite into strong outcome statements using change verbs (improved, increased, reduced, strengthened, adopted) with who, what, and when: [paste statements]"</em></div>
+                       <div class="prompt-card-item"><strong>2. Accountability Line:</strong><br><em>"Separate outputs/outcomes we are directly accountable for from impact we contribute to: [paste results]"</em></div>`
+            },
+            "prompts-m4": {
+                title: "AI Prompt Library — Module 4: Pathway, Assumptions, Risks & Evidence Prompts",
+                plainText: "1. If-Then-Because Audit: 'Audit each If-Then-Because statement below for causal mechanism clarity and hidden assumptions: [paste chain]'\n2. Evidence & Risk Check: 'Group notes into Causal, Contextual, and Delivery assumptions/risks and highlight thin evidence areas: [paste notes]'",
+                html: `<div class="prompt-card-item"><strong>1. If–Then–Because Audit:</strong><br><em>"Audit each If–Then–Because statement below for causal mechanism clarity and hidden assumptions: [paste chain]"</em></div>
+                       <div class="prompt-card-item"><strong>2. Evidence & Risk Check:</strong><br><em>"Group notes into Causal, Contextual, and Delivery assumptions/risks and highlight thin evidence areas: [paste notes]"</em></div>`
+            },
+            "prompts-m5": {
+                title: "AI Prompt Library — Module 5: SMART Indicators & Cross-Cutting Lenses Prompts",
+                plainText: "1. SMART Indicator Builder: 'Suggest SMART indicators, verification sources, and disaggregation (sex, age, disability, location) for these outcomes: [paste outcomes]'\n2. Cross-Cutting Lenses Check: 'Review design for Gender, Disability/Inclusion, Safeguarding/PSEA, Conflict Sensitivity, Climate, and Local Ownership: [paste design]'",
+                html: `<div class="prompt-card-item"><strong>1. SMART Indicator Builder:</strong><br><em>"Suggest SMART indicators, verification sources, and disaggregation (sex, age, disability, location) for these outcomes: [paste outcomes]"</em></div>
+                       <div class="prompt-card-item"><strong>2. Cross-Cutting Lenses Check:</strong><br><em>"Review design for Gender, Disability/Inclusion, Safeguarding/PSEA, Conflict Sensitivity, Climate, and Local Ownership: [paste design]"</em></div>`
+            },
+            "prompts-m6": {
+                title: "AI Prompt Library — Module 6: 6-Prompt ToC Narrative & Readiness Prompts",
+                plainText: "1. 6-Paragraph ToC Narrative: 'Draft a 450-word ToC narrative across the 6 prompts using strictly these verified inputs, with zero invented facts: [paste inputs]'\n2. Readiness Review: 'Score this ToC against Logic, Evidence, Measurement, Assumptions, Inclusion, Feasibility, Learning, and Presentation: [paste draft]'",
+                html: `<div class="prompt-card-item"><strong>1. 6-Paragraph ToC Narrative:</strong><br><em>"Draft a 450-word ToC narrative across the 6 prompts using strictly these verified inputs, with zero invented facts: [paste inputs]"</em></div>
+                       <div class="prompt-card-item"><strong>2. Readiness Review:</strong><br><em>"Score this ToC against Logic, Evidence, Measurement, Assumptions, Inclusion, Feasibility, Learning, and Presentation: [paste draft]"</em></div>`
+            }
+        };
+
+        const AI_AND_VIDEO_TOOLS = [
+            { cat: "AI Assistant", name: "Claude (Anthropic) — Logic & Narrative Drafting", desc: "Strong for structured causal audits, long-form 400–600 word ToC narratives, and checking consistency between indicators and outcomes when given source facts.", url: "https://claude.ai", cta: "Open Claude" },
+            { cat: "AI Assistant", name: "ChatGPT (OpenAI) — Prompt Testing & Table Structuring", desc: "Useful for organizing Problem Tree rows, testing If–Then–Because critiques, and formatting Results Framework drafts under strict zero-hallucination prompts.", url: "https://chatgpt.com", cta: "Open ChatGPT" },
+            { cat: "AI Assistant", name: "Gemini — Research Synthesis & Multi-Format Structuring", desc: "Helpful for synthesizing program notes, brainstorming indicator options, and structuring training outlines while verifying claims against primary sources.", url: "https://gemini.google.com", cta: "Open Gemini" },
+            { cat: "AI Research", name: "Perplexity — Source-Linked Literature & Context Discovery", desc: "Useful for finding external evaluation frameworks and background context with source links—always verify primary documents directly.", url: "https://www.perplexity.ai", cta: "Open Perplexity" },
+            { cat: "Video Tool", name: "Canva Video & Presentation Studio", desc: "Create clean visual slides, explainer animations, and stakeholder pitch decks for grant proposals and donor briefings.", url: "https://www.canva.com", cta: "Open Canva" },
+            { cat: "Video Tool", name: "Loom — Walkthrough & Proposal Explainer Videos", desc: "Record concise 2–3 minute screen-and-camera walkthroughs explaining your Theory of Change diagram or logframe to partners.", url: "https://www.loom.com", cta: "Open Loom" },
+            { cat: "Video Tool", name: "OBS Studio — Free Recording & Live Training Tool", desc: "Open-source tool for recording workshops, screen demonstrations, and multi-source training sessions offline or online.", url: "https://obsproject.com", cta: "Open OBS Studio" },
+            { cat: "Diagram & Visual Tool", name: "Whimsical / Miro — Visual Problem Trees & Pathways", desc: "Collaborative whiteboards for mapping Problem Trees, backward pathways, and stakeholder influence/interest matrices.", url: "https://miro.com", cta: "Open Miro" }
+        ];
+
+        const ICONS_WITH_NOTES = [
+            { icon: "🎯", title: "Impact (Goal)", note: "Lasting change for people or systems over the medium/long term; your project contributes alongside external factors." },
+            { icon: "🌱", title: "Outcome (Purpose)", note: "Change in behaviour, skill, attitude, practice, or condition—use change verbs (improved, adopted), never activities." },
+            { icon: "📦", title: "Output (Deliverable)", note: "Tangible product, service, or completed training/asset directly delivered by the project." },
+            { icon: "🔗", title: "If–Then–Because", note: "Causal link explaining why a result happens ('because' mechanism); prevents unexamined jumps in logic." },
+            { icon: "🌳", title: "Problem Tree", note: "Bottom-up diagnosis: Root Causes → Direct Causes → Core Problem → Effects; avoids 'lack of project' bias." },
+            { icon: "🛡️", title: "Assumptions & Risks", note: "Causal, contextual, and delivery conditions required for logic to hold, paired with risk mitigation." },
+            { icon: "📏", title: "SMART Indicators", note: "Specific, Measurable, Achievable, Relevant, Time-bound metrics with baseline, target, source & equity disaggregation." },
+            { icon: "🤖", title: "Responsible AI", note: "Use AI to structure and challenge logic, but never allow fabricated data, fake citations, or unverified donor claims." }
+        ];
+
+        const AUDIO_SCRIPTS = [
+            { mod: 1, title: "Audio Note 1: Foundations & The 8-Step ToC Rhythm", duration: "~2 min", script: "Welcome to Module 1. A strong Theory of Change starts with the change needed for people and works backwards. Always mirror the donor's terminology so reviewers see immediate alignment, and treat AI as a structured drafting assistant—never a source of invented statistics." },
+            { mod: 2, title: "Audio Note 2: Diagnosing Problems Without Project Bias", duration: "~2 min", script: "In Module 2, build your Problem Tree from the bottom up. Start with root causes and direct causes, pinpoint the core problem with real data and sources, and map the consequences above. Never define a problem simply as the absence of your project." },
+            { mod: 3, title: "Audio Note 3: Writing Change-Oriented Outcomes", duration: "~2 min", script: "Module 3 focuses on outcome wording and your accountability line. Replace activity verbs like trained or conducted with change verbs like improved, increased, and adopted, and clearly state who changes and by when." },
+            { mod: 4, title: "Audio Note 4: Proving the 'Because' & Grading Evidence", duration: "~2 min", script: "Module 4 tests your causal chain with If–Then–Because statements. Every link needs a clear mechanism explaining why change occurs, alongside honest evidence ratings—Strong, Moderate, or Emerging—and risk mitigation." },
+            { mod: 5, title: "Audio Note 5: SMART Indicators & Cross-Cutting Equity", duration: "~2 min", script: "Module 5 turns your pathway into measurable indicators with clear baselines, targets, verification sources, and disaggregation by sex, age, disability, and location, while embedding gender, inclusion, safeguarding, and conflict sensitivity." },
+            { mod: 6, title: "Audio Note 6: 6-Paragraph Narrative & The 85% Readiness Gate", duration: "~2 min", script: "In Module 6, weave your logic into a crisp 400 to 600 word narrative across six structured prompts, link MEAL to continuous learning, and aim for 85 percent or higher on the 34-point donor-readiness checklist before submitting." }
+        ];
+
+        const HANDWRITTEN_NOTES = [
+            { mod: 1, title: "Sketchpad #1 — Start With Change, Not Activities!", bullets: ["Donors fund change in people & systems—not just workshops held.", "Match donor words (Goal/Impact, Purpose/Outcome) early so reviewers don't translate.", "AI is a drafting & logic-checking assistant; never let it invent numbers or fake studies."] },
+            { mod: 2, title: "Sketchpad #2 — Problem Tree Bottom-Up", bullets: ["Roots = deep drivers (norms, policy, poverty, climate/access).", "Trunk = core problem backed by real numbers + source.", "Branches/Leaves = consequences if nothing changes. Never write 'lack of our project'!"] },
+            { mod: 3, title: "Sketchpad #3 — Change Verbs vs. Activity Verbs", bullets: ["Activity verb = 'trained 200 teachers'. Outcome = 'teachers apply structured methods in class'.", "Every outcome needs: WHO changes + WHAT changes + BY WHEN.", "Mind the Accountability Line: own outputs/outcomes; contribute to impact."] },
+            { mod: 4, title: "Sketchpad #4 — The 'BECAUSE' Test", bullets: ["IF [output/condition] -> THEN [result] -> BECAUSE [mechanism].", "Ask a tough reviewer: 'Why would this happen here?' That answer is your 'because'.", "Check Causal, Contextual & Delivery assumptions before promising big outcomes."] },
+            { mod: 5, title: "Sketchpad #5 — SMART + Equity Disaggregation", bullets: ["Baseline -> Target + Source + Frequency for every key indicator.", "Always disaggregate by sex, age, disability & location where relevant.", "Weave in Gender, Disability/Inclusion, Safeguarding/PSEA, Conflict, Climate & Ownership."] },
+            { mod: 6, title: "Sketchpad #6 — 400–600 Word Narrative & 85% Gate", bullets: ["6 paragraphs tell one clear story: Problem -> Change -> How -> Why/Evidence -> Risks -> Vision.", "MEAL turns assumptions & thin evidence into active learning questions.", "Check the 34-point scorecard—aim for 85%+ (29+ pts) before hitting submit!"] }
+        ];
+
+        const INFOGRAPHICS_DATA = [
+            {
+                title: "Infographic 1: End-to-End Results-Based ToC & Proposal Flow",
+                caption: "Visual progression from grounded situation analysis to donor-ready proposal narrative.",
+                steps: ["1. Situation & Problem Tree", "2. Impact & Outcomes", "3. If–Then–Because Pathway", "4. Assumptions & Evidence", "5. SMART RF & MEAL", "6. 85%+ Narrative"]
+            },
+            {
+                title: "Infographic 2: Causal Accountability Bridge (Outputs → Outcomes → Impact)",
+                caption: "Distinguishes direct deliverable control from shared system-level impact.",
+                steps: ["Inputs & Activities", "Outputs (Deliverables)", "Outcomes (Behaviour/Practice)", "Shared Impact (85%+ Ready)"]
+            }
+        ];
+
+        const EXTERNAL_RESOURCES = [
+            { type: "Video Link", title: "Theory of Change Explained | Why Every Nonprofit Needs This", desc: "Clear walkthrough of how Theory of Change connects daily program work to long-term social impact.", url: "https://www.youtube.com/watch?v=cg4J1g0IVHg", cta: "Watch Video" },
+            { type: "Video Link", title: "Step 1 — Identifying the Focal Issue with Problem Tree Analysis", desc: "Practical visual guide to separating root causes, core problems, and downstream effects.", url: "https://www.youtube.com/watch?v=-j-_Y7D35H4", cta: "Watch Video" },
+            { type: "Video Link", title: "How to Develop a Logical Framework & Results Chain", desc: "Covers linking objectives, indicators, assumptions, and verification sources for proposals.", url: "https://www.youtube.com/watch?v=d0NPxGgGMtM", cta: "Watch Video" },
+            { type: "Book / Guide", title: "Theory of Change: A Practical Tool for Action, Results and Learning (UNDP)", desc: "Classic development practitioner guide on designing, testing, and using Theories of Change.", url: "https://www.undp.org/publications", cta: "Explore UNDP Publications" },
+            { type: "Book / Guide", title: "The Blue Book: Results-Based Management & Evaluation Resources (OECD DAC)", desc: "Standard international reference on evaluation criteria, relevance, coherence, effectiveness, and sustainability.", url: "https://www.oecd.org/en/topics/sub-issues/development-co-operation-evaluation.html", cta: "Explore OECD Evaluation" },
+            { type: "Blog / Hub", title: "BetterEvaluation — Rainbow Framework & MEAL Blogs", desc: "Practical articles and methods for monitoring, evaluation, learning, and evidence synthesis.", url: "https://www.betterevaluation.org", cta: "Visit BetterEvaluation" },
+            { type: "Blog / Hub", title: "Tools4Dev — Practical Guides on Logframes, ToC & Proposals", desc: "Accessible how-to articles for NGO and development practitioners building theories of change and logframes.", url: "https://www.tools4dev.org", cta: "Visit Tools4Dev" },
+            { type: "Relevant Resource", title: "UNICEF Programme Guidance & Results-Based Management Resources", desc: "Reference guidance on equity-focused indicators, child/youth outcomes, and results frameworks.", url: "https://www.unicef.org/evaluation", cta: "Visit UNICEF Evaluation" }
+        ];
+
+        const PPT_DECKS = {
+            1: [
+                { tag: "Slide 1.1 • Foundations", title: "Why Donors Expect a Results-Based Theory of Change", bullets: ["Connects everyday project activities to measurable human and institutional change.", "Aligns grant proposals and concept notes with donor results expectations.", "Pairs structured RBM logic with responsible AI prompt workflows (zero invented facts)."], notes: "Speaker Note: Emphasize that donors fund measurable change for target groups—not just activities completed on time." },
+                { tag: "Slide 1.2 • 8-Step Roadmap", title: "The 8-Step Theory of Change Design Cycle", bullets: ["Steps 1–2: Project snapshot, problem tree & backward impact/outcome definition.", "Steps 3–5: If–Then–Because pathways, assumptions/risks & evidence grading.", "Steps 6–8: SMART indicators, cross-cutting lenses, MEAL & 400–600 word narrative."], notes: "Speaker Note: Walk learners through how each step builds directly into the next section of a grant proposal." },
+                { tag: "Slide 1.3 • Golden Rules", title: "Six Golden Rules & Mirroring Donor Terms", bullets: ["Start from change for people—never from activities or budget lines.", "Mirror donor labels (Goal/Impact, Purpose/Outcome, Output, Activity) accurately.", "Keep models focused: typically 1 Impact, 3–5 Outcomes, and 6–10 Outputs."], notes: "Speaker Note: Over-engineered ToC diagrams confuse reviewers; clarity and alignment win scores." },
+                { tag: "Slide 1.4 • Responsible AI", title: "Using AI Safely in Grant & Proposal Design", bullets: ["Supply verified baseline facts, target groups, and donor rules in the prompt.", "Ask AI to audit causal gaps, rewrite wording, or structure tables.", "Never let AI invent statistics, citations, or donor commitments."], notes: "Speaker Note: Human verification is non-negotiable before any AI-assisted text enters a live submission." }
+            ],
+            2: [
+                { tag: "Slide 2.1 • Problem Statement", title: "Writing Evidence-Backed Problem Statements", bullets: ["Keep problem statements concise (1–3 sentences) and anchored in real data.", "Identify who is affected, where, and which groups face exclusion or risk.", "Never define a problem merely as 'lack of our project'."], notes: "Speaker Note: Contrast a vague statement ('Lack of training') with a grounded statement backed by data and source." },
+                { tag: "Slide 2.2 • Problem Tree", title: "Building a Bottom-Up Problem Tree", bullets: ["Base (Root Causes): Structural, social, policy, economic & environmental drivers.", "Middle (Direct Causes & Core Problem): Immediate drivers and focal issue.", "Top (Effects): Long-term consequences if left unaddressed."], notes: "Speaker Note: Always build from the bottom up so root causes aren't confused with surface symptoms." },
+                { tag: "Slide 2.3 • Scope & Gaps", title: "Defining Scope Boundaries & Existing Gaps", bullets: ["Document existing initiatives, service gaps, and enabling opportunities.", "Explicitly state what is In-Scope vs. Out-of-Scope to prevent proposal creep."], notes: "Speaker Note: Clear boundaries show discipline and realism to grant review panels." },
+                { tag: "Slide 2.4 • Data Audit", title: "Flagging Missing Data Before Drafting", bullets: ["Separate confirmed statistics from estimates or assumptions.", "Mark missing numbers clearly so field/MEAL teams can verify them."], notes: "Speaker Note: Flagging gaps early prevents last-minute errors during proposal assembly." }
+            ],
+            3: [
+                { tag: "Slide 3.1 • Impact", title: "Crafting a Clear Impact Statement", bullets: ["One crisp sentence describing lasting change for a defined population.", "Reflects a broader shift that donors and partners care deeply about."], notes: "Speaker Note: Keep the impact sentence focused and unambiguous." },
+                { tag: "Slide 3.2 • Outcomes", title: "Outcome Wording: Change Verbs Over Activity Verbs", bullets: ["Use change verbs: improved, increased, reduced, strengthened, adopted, applied.", "Avoid activity verbs: train, conduct, organise, provide, deliver, distribute.", "Specify who changes, what changes, and the expected timeframe."], notes: "Speaker Note: A classic proposal flaw is disguising an output or activity as an outcome." },
+                { tag: "Slide 3.3 • Accountability", title: "Setting Your Accountability Line", bullets: ["Distinguish direct accountability (outputs & outcomes) from shared contribution (impact).", "Protects teams from overclaiming credit for external macro shifts."], notes: "Speaker Note: Credibility rises when you state what you directly deliver vs. contribute to." },
+                { tag: "Slide 3.4 • Outcome Check", title: "5-Point Outcome Quality Check", bullets: ["1. Change verb used? 2. Target group named? 3. Timeframe clear?", "4. Measurable/verifiable? 5. Linked logically to downstream impact?"], notes: "Speaker Note: Run every draft outcome through these five checks." }
+            ],
+            4: [
+                { tag: "Slide 4.1 • Causal Chain", title: "If–Then–Because Causal Logic", bullets: ["IF [condition/output] → THEN [result/outcome] → BECAUSE [causal mechanism].", "The 'BECAUSE' clause explains why the change happens—the heart of reviewer scrutiny."], notes: "Speaker Note: If you cannot explain 'because', the causal leap may be too wide." },
+                { tag: "Slide 4.2 • Assumptions & Risks", title: "Causal, Contextual & Delivery Assumptions", bullets: ["Log assumptions across Causal, Contextual, and Delivery dimensions.", "Score likelihood and impact (H/M/L) and define concrete mitigation actions."], notes: "Speaker Note: Pair every major assumption with a practical risk response." },
+                { tag: "Slide 4.3 • Evidence Tiers", title: "Grading Evidence Strength & Filling Gaps", bullets: ["Strong (High): RCTs, systematic reviews, rigorous quasi-experimental studies.", "Moderate (Medium) & Emerging (Low): Evaluations, surveys, pilots, community voices.", "Turn thin evidence links into explicit MEAL learning questions."], notes: "Speaker Note: Honesty about emerging evidence builds trust when paired with a learning plan." },
+                { tag: "Slide 4.4 • Pathway Alignment", title: "Checking Alignment Across Pathway & Logframe", bullets: ["Ensure every pathway node maps cleanly to your Results Framework.", "Remove orphaned activities that do not serve an outcome."], notes: "Speaker Note: Alignment across narrative, diagram, and logframe is essential." }
+            ],
+            5: [
+                { tag: "Slide 5.1 • SMART Indicators", title: "Operationalizing SMART Indicators", bullets: ["SMART: Specific, Measurable, Achievable, Relevant, Time-bound, Practical.", "Define baseline, target, calculation formula/type, data source, and frequency.", "Disaggregate by sex, age, disability, and geographic location."], notes: "Speaker Note: Every indicator needs a starting baseline and realistic target." },
+                { tag: "Slide 5.2 • Stakeholders", title: "Stakeholder Mapping & Engagement", bullets: ["Map primary and secondary stakeholders by Influence and Interest (H/M/L).", "Plan tailored engagement and local ownership mechanisms."], notes: "Speaker Note: Engage key decision-makers and affected communities early." },
+                { tag: "Slide 5.3 • Cross-Cutting Lenses", title: "Six Cross-Cutting Lenses in Proposal Design", bullets: ["Gender equality, Disability & inclusion, Safeguarding & PSEA.", "Conflict sensitivity (Do No Harm), Climate/environment & Local ownership."], notes: "Speaker Note: Donors increasingly score cross-cutting integration across the whole proposal." },
+                { tag: "Slide 5.4 • Verification", title: "Means of Verification & Data Sources", bullets: ["Specify exact tools, registries, assessments, or administrative records.", "Match collection frequency to decision and reporting cycles."], notes: "Speaker Note: Keep verification realistic within budget and capacity." }
+            ],
+            6: [
+                { tag: "Slide 6.1 • MEAL System", title: "MEAL Plan, Data Quality & Ethics", bullets: ["Align learning questions with Relevance, Coherence, Effectiveness, Efficiency, Impact & Sustainability.", "Enforce informed consent, confidentiality, data validation, and ethical safeguards."], notes: "Speaker Note: MEAL is for learning and adaptation—not just compliance reporting." },
+                { tag: "Slide 6.2 • 6-Prompt Narrative", title: "Writing the 400–600 Word ToC Narrative", bullets: ["Structure into 6 clear paragraphs: Problem, Change Sought, How Change Happens, Approach & Evidence, Assumptions/Risks, Success Vision.", "Verify every statistic and citation against source documents."], notes: "Speaker Note: Keep prose crisp, active, and tightly aligned with your diagram." },
+                { tag: "Slide 6.3 • Donor Readiness", title: "85%+ Donor-Readiness Scorecard Check", bullets: ["Score all 17 criteria (0–2 each, max 34 points) before submitting.", "Target 85%+ (29+ points) for strong, donor-ready proposal logic."], notes: "Speaker Note: Use the scorecard as a pre-submission quality gate." },
+                { tag: "Slide 6.4 • Final Polish", title: "Two-Minute Reviewer Clarity Test", bullets: ["Can a non-specialist grasp your core logic in two minutes?", "Confirm zero contradictions between budget, logframe, and narrative."], notes: "Speaker Note: A clear two-minute story helps busy reviewers champion your proposal." }
+            ]
+        };
+
+        const QUIZ_BANK_ITEMS = [
+            { id: "q1", mod: 1, q: "What is the primary purpose of a Results-Based Theory of Change in a grant proposal?", opts: ["To pad word count with general theory", "To show how project activities logically lead to measurable results and impact", "To replace the project budget"], ans: 1, exp: "A Theory of Change explains the causal logic connecting inputs/activities to outputs, outcomes, and impact." },
+            { id: "q2", mod: 1, q: "Which rule applies when using AI tools to help draft a Theory of Change?", opts: ["Let AI invent benchmarks when data is missing", "Provide verified inputs and prohibit invented data, citations, or claims", "Submit raw AI output without checking"], ans: 1, exp: "AI must work from verified facts and never fabricate data or citations." },
+            { id: "q3", mod: 2, q: "In a Problem Tree, where do Root Causes sit?", opts: ["At the very top as long-term consequences", "At the bottom as underlying causes driving direct causes and the core problem", "Outside the problem tree completely"], ans: 1, exp: "Root causes sit at the base and drive direct causes and the core problem." },
+            { id: "q4", mod: 2, q: "Why should you avoid 'lack of our project' as a problem statement?", opts: ["It is too short", "It assumes your specific project is the only solution and hides real conditions/data", "Donors prefer longer sentences"], ans: 1, exp: "Problem statements should describe real conditions and data affecting people, not merely the absence of your project." },
+            { id: "q5", mod: 3, q: "Which verb best fits an Outcome statement rather than an Activity?", opts: ["Conducted", "Adopted", "Printed"], ans: 1, exp: "'Adopted' reflects a change in practice/behaviour, whereas 'conducted' or 'printed' are activities/outputs." },
+            { id: "q6", mod: 3, q: "What is the Accountability Line?", opts: ["A budget line for staff travel", "The boundary between results you directly control/deliver vs. broader impact you contribute to", "A deadline for concept notes"], ans: 1, exp: "It distinguishes direct accountability (outputs/outcomes) from shared contribution to broader impact." },
+            { id: "q7", mod: 4, q: "In 'IF X, THEN Y, BECAUSE Z', what does Z represent?", opts: ["The donor's grant number", "The causal mechanism explaining why Y follows X", "The final invoice"], ans: 1, exp: "Z ('because') states the mechanism or rationale behind the causal step." },
+            { id: "q8", mod: 4, q: "Which set lists the three assumption/risk types emphasized in the toolkit?", opts: ["Causal, Contextual, and Delivery", "Marketing, Sales, and Pricing", "Hardware, Software, and Network"], ans: 0, exp: "The toolkit highlights causal, contextual, and delivery assumptions/risks." },
+            { id: "q9", mod: 5, q: "Which elements should a strong indicator specification include?", opts: ["Baseline, target, means of verification, frequency, and equity disaggregation", "Only a target number", "Only the project title"], ans: 0, exp: "Indicators require baseline, target, verification source, frequency, and relevant disaggregation (e.g., sex, age, disability)." },
+            { id: "q10", mod: 5, q: "Which are core cross-cutting lenses in proposal design?", opts: ["Gender equality, disability & inclusion, safeguarding/PSEA, and conflict sensitivity", "Font choice, margin width, and page color", "Office lease terms"], ans: 0, exp: "Equity, inclusion, safeguarding/PSEA, conflict sensitivity, climate, and local ownership are key cross-cutting lenses." },
+            { id: "q11", mod: 6, q: "What is the recommended length for the structured Theory of Change narrative?", opts: ["50–80 words", "400–600 words across 6 structured paragraphs", "3,500 words without headings"], ans: 1, exp: "The toolkit guides a clear 400–600 word narrative structured across 6 prompts." },
+            { id: "q12", mod: 6, q: "What score on the 34-point Donor-Readiness Checklist signals strong readiness?", opts: ["85% or higher (29+ points)", "40% (14 points)", "10% (3 points)"], ans: 0, exp: "85%+ (29+ out of 34 points) indicates a strong, donor-ready Theory of Change." }
+        ];
+
+        const REFLECTION_QUESTIONS = [
+            "1. Reviewer Challenge: If a skeptical donor reviewer asks 'Why will this specific intervention change behaviour in this context?', what is your sharpest 'because' answer?",
+            "2. Equity & Inclusion Check: Which marginalized or hard-to-reach group could be unintentionally left out of your activities or indicators, and how will you reach them?",
+            "3. Evidence Gap Action: Which causal link in your Theory of Change currently has the weakest evidence, and what MEAL data will you collect to test it?"
+        ];
+
+        const FLASHCARDS_DATA = [
+            { mod: 1, front: "What are the 3 core parts of the ToC & Proposal Toolkit?", back: "(1) ToC Preparation Template, (2) AI Prompt Library for Proposals & Concept Notes, and (3) ToC Results Framework Workbook." },
+            { mod: 1, front: "Golden Rule #1 & #2 of Theory of Change?", back: "Start from the change needed for people (not activities) and work backwards." },
+            { mod: 1, front: "Why mirror donor terminology?", back: "Aligning terms like Impact/Goal and Outcome/Purpose makes grant reviewers immediately see how your design fits the call." },
+            { mod: 2, front: "What is 'project bias' in a problem statement?", back: "Defining a problem as 'lack of our project/intervention' instead of describing the real condition and data affecting people." },
+            { mod: 2, front: "Direction of a Problem Tree from bottom to top?", back: "Root Causes → Direct Causes → Core Problem → Effects." },
+            { mod: 2, front: "Minimum data standard for a strong problem statement?", back: "1–3 clear sentences backed by at least one verified data point and named source." },
+            { mod: 3, front: "Name 4 strong 'change verbs' for Outcomes.", back: "Improved, increased, reduced, strengthened, adopted, applied (vs. activity verbs like train or distribute)." },
+            { mod: 3, front: "What does the Accountability Line separate?", back: "Results you are directly accountable for (outputs/outcomes) from long-term impact you contribute to with others." },
+            { mod: 3, front: "Three essentials in every Outcome statement?", back: "Who changes, what changes, and by when." },
+            { mod: 4, front: "What does the 'BECAUSE' clause in If–Then–Because do?", back: "It states the causal mechanism explaining why one step produces the next." },
+            { mod: 4, front: "Three categories of assumptions & risks?", back: "Causal assumptions, Contextual assumptions, and Delivery/implementation assumptions." },
+            { mod: 4, front: "Three evidence strength ratings?", back: "Strong (High), Moderate (Medium), and Emerging (Low)—with thin areas flagged for MEAL." },
+            { mod: 5, front: "Five operational questions for an indicator?", back: "Who/what changes, baseline, target, timeframe, and means of verification (plus disaggregation)." },
+            { mod: 5, front: "Key disaggregation dimensions in equity-focused RBM?", back: "Sex, age, disability status, and geographic/socioeconomic location." },
+            { mod: 5, front: "Name 4 cross-cutting lenses in the toolkit.", back: "Gender equality, disability & inclusion, safeguarding/PSEA, conflict sensitivity, climate/environment, and local ownership." },
+            { mod: 6, front: "Target word count & structure for the ToC Narrative?", back: "400–600 words organized across 6 structured paragraphs." },
+            { mod: 6, front: "What score on the 34-point Readiness Checklist is 'Strong'?", back: "85% or higher (29+ out of 34 points)." },
+            { mod: 6, front: "Core rule when using AI for grant proposals?", back: "Never let AI invent statistics, donor facts, or citations; verify every claim against real evidence." }
+        ];
+
+        const MINDMAPS_DATA = [
+            {
+                mod: 1,
+                center: "Module 1: RBM & ToC Foundations",
+                branches: [
+                    { title: "Toolkit Package", items: ["Preparation Template", "50+ AI Prompts Library", "Results Framework Sheet"] },
+                    { title: "8-Step Workflow", items: ["Problem & Snapshot", "Backward Outcomes & Logic", "Indicators, MEAL & Narrative"] },
+                    { title: "Golden Rules", items: ["Change-first, not activity-first", "Mirror donor terminology", "Keep structure focused"] }
+                ]
+            },
+            {
+                mod: 2,
+                center: "Module 2: Situation & Problem Analysis",
+                branches: [
+                    { title: "Problem Tree", items: ["Root Causes (bottom)", "Direct Causes & Core Issue", "Effects (top)"] },
+                    { title: "Data & Rigor", items: ["1–3 sentences + data point", "Avoid 'lack of project'", "Cite real sources"] },
+                    { title: "Boundaries", items: ["Target & excluded groups", "In-scope vs. out-of-scope"] }
+                ]
+            },
+            {
+                mod: 3,
+                center: "Module 3: Impact, Outcomes & Accountability",
+                branches: [
+                    { title: "Impact Statement", items: ["1 sentence", "Lasting change for people"] },
+                    { title: "Outcome Verbs", items: ["Improved, increased, reduced", "Adopted, applied, strengthened"] },
+                    { title: "Accountability Line", items: ["Direct control (Outputs/Outcomes)", "Shared contribution (Impact)"] }
+                ]
+            },
+            {
+                mod: 4,
+                center: "Module 4: Pathway, Assumptions & Evidence",
+                branches: [
+                    { title: "If–Then–Because", items: ["IF condition", "THEN result", "BECAUSE mechanism"] },
+                    { title: "Assumptions & Risks", items: ["Causal, Contextual, Delivery", "Likelihood/Impact + mitigation"] },
+                    { title: "Evidence Grading", items: ["Strong / Moderate / Emerging", "MEAL learning for gaps"] }
+                ]
+            },
+            {
+                mod: 5,
+                center: "Module 5: SMART Indicators & Lenses",
+                branches: [
+                    { title: "SMART Metrics", items: ["Baseline & Target", "Verification source & frequency", "Count, %, rate, index, milestone"] },
+                    { title: "Disaggregation", items: ["Sex & Age", "Disability & Location"] },
+                    { title: "Cross-Cutting Lenses", items: ["Gender, Disability, PSEA", "Conflict, Climate, Ownership"] }
+                ]
+            },
+            {
+                mod: 6,
+                center: "Module 6: MEAL, Narrative & Readiness",
+                branches: [
+                    { title: "MEAL & Ethics", items: ["Evaluation & learning questions", "Data quality & ethics checks"] },
+                    { title: "6-Prompt Narrative", items: ["400–600 words", "6 structured paragraphs"] },
+                    { title: "Readiness Gate", items: ["17 criteria (max 34 pts)", "Aim for 85%+ before submit"] }
+                ]
+            }
+        ];
+
+        const MODULES_DATA = [
+            {
+                id: 1,
+                title: "Module 1: RBM & Theory of Change Foundations",
+                desc: "Master the 8-step ToC process, the 6 Golden Rules, handbook structure, and donor terminology alignment.",
+                lessons: [
+                    { label: "Lesson 1.1: Why Donors Expect a Theory of Change & The 3 Handbook Parts", guideKey: "handbook-overview" },
+                    { label: "Lesson 1.2: The 8-Step ToC Process, 6 Golden Rules & Mirroring Donor Terms", guideKey: "terminology-snapshot" }
+                ],
+                studyLinks: [
+                    { label: "Detailed PPT (4 Slides)", action: "openPptModule(1)" },
+                    { label: "Audio Note & AI/Video Tools", action: "switchDashTab('audio')" },
+                    { label: "Icons & Handwritten Notes", action: "switchDashTab('icons')" },
+                    { label: "Flashcards & Quiz Bank", action: "openModuleFlashcards(1)" }
+                ],
+                resources: [
+                    { label: "Handbook: Handbook Package & 8-Step Guide", guideKey: "handbook-overview" },
+                    { label: "Handbook: Terminology & Project Snapshot", guideKey: "terminology-snapshot" }
+                ],
+                promptLinks: [
+                    { label: "AI Prompt Library: Proposal & Concept Note Framing Prompts", guideKey: "prompts-m1" }
+                ],
+                handoutPoints: [
+                    "Align your terminology (Impact/Goal, Outcome/Purpose, Output, Activity) to the donor's call.",
+                    "Work backwards from the change needed for beneficiaries rather than starting with activities.",
+                    "Use AI strictly to organize and check logic—never fabricate statistics or citations."
+                ],
+                notes: "Key levels: Impact (long-term change you contribute to), Outcome (changes in knowledge, skills, attitudes, behaviour, practice or conditions), Output (deliverables/goods/services), Activity (actions/tasks), Input (resources).",
+                prompt: "Act as an RBM & grant design specialist. Help me align my project terms (Impact, Outcome, Output, Activity, Input) with this donor call without inventing data or citations.",
+                quiz: {
+                    question: "According to the 6 Golden Rules of Theory of Change, where should you begin your design?",
+                    options: [
+                        "Start from the activities and budget available",
+                        "Start from the change needed for people and work backwards",
+                        "Start by listing all workshops and training materials"
+                    ],
+                    correct: 1,
+                    explanation: "Rule 1 & 2: Start from the change for people, not the activity, and work backwards asking 'What must be true immediately before this?'"
+                },
+                assignmentPrompt: "Draft your Project Snapshot (Title, Target Group, Location, and Donor Terminology Alignment):"
+            },
+            {
+                id: 2,
+                title: "Module 2: Situation & Problem Analysis",
+                desc: "Write data-backed problem statements without 'project bias', separate root causes from symptoms, and build a Problem Tree.",
+                lessons: [
+                    { label: "Lesson 2.1: Writing Data-Backed Problem Statements & Avoiding 'Project Bias'", guideKey: "problem-analysis" },
+                    { label: "Lesson 2.2: Root Causes, Context, Gaps, Scope & Problem Tree Mapping", guideKey: "problem-analysis" }
+                ],
+                studyLinks: [
+                    { label: "Detailed PPT (4 Slides)", action: "openPptModule(2)" },
+                    { label: "Handwritten & Audio Notes", action: "switchDashTab('handwritten')" },
+                    { label: "Infographic & Flashcards", action: "openModuleFlashcards(2)" },
+                    { label: "AI/Video Tools & Quiz Bank", action: "switchDashTab('tools')" }
+                ],
+                resources: [
+                    { label: "Handbook: Problem & Situation Analysis + Problem Tree Template", guideKey: "problem-analysis" }
+                ],
+                promptLinks: [
+                    { label: "AI Prompt Library: Problem Tree & Situation Analysis Prompts", guideKey: "prompts-m2" }
+                ],
+                handoutPoints: [
+                    "Write 1–3 sentences for the problem statement with at least one verified data point.",
+                    "Build the Problem Tree bottom-up: Root Causes → Direct Causes → Core Problem → Effects.",
+                    "Explicitly record what is in-scope and out-of-scope for your project."
+                ],
+                notes: "Problem Tree runs bottom-up from Root Causes → Direct Causes → Core Problem → Effects. Always cite real sources and define in-scope vs. out-of-scope boundaries.",
+                prompt: "Using only the facts and data I provide below, structure a Problem Tree (Root Causes, Direct Causes, Core Problem, Effects) and flag any missing data.",
+                quiz: {
+                    question: "Which is a common mistake to avoid when writing a problem statement?",
+                    options: [
+                        "Including at least one recent data point and source",
+                        "Describing the problem as 'lack of our project' or absence of a service",
+                        "Identifying who is most excluded or at greatest risk"
+                    ],
+                    correct: 1,
+                    explanation: "Describe the problem experienced by people using verified data—never define the problem merely as the absence of your proposed project."
+                },
+                assignmentPrompt: "Write a 2–3 sentence Problem Statement with at least one data point and list 2 root causes:"
+            },
+            {
+                id: 3,
+                title: "Module 3: Impact, Outcome Statements & Accountability Line",
+                desc: "Craft one-sentence Impact statements and strong Outcome statements using change verbs, and define your Accountability Line.",
+                lessons: [
+                    { label: "Lesson 3.1: Impact Statements & The 5-Point Outcome Wording Checklist", guideKey: "impact-outcomes" },
+                    { label: "Lesson 3.2: Drawing the Accountability Line & Strong vs. Weak Examples", guideKey: "impact-outcomes" }
+                ],
+                studyLinks: [
+                    { label: "Detailed PPT (4 Slides)", action: "openPptModule(3)" },
+                    { label: "Handout & Icons/Notes", action: "switchDashTab('handouts')" },
+                    { label: "Flashcards & Quiz Bank", action: "openModuleFlashcards(3)" },
+                    { label: "Mind Map & External Links", action: "switchDashTab('mindmaps')" }
+                ],
+                resources: [
+                    { label: "Handbook: Outcome Wording Checklist & Weak vs. Strong Examples", guideKey: "impact-outcomes" }
+                ],
+                promptLinks: [
+                    { label: "AI Prompt Library: Outcome Wording & Accountability Line Prompts", guideKey: "prompts-m3" }
+                ],
+                handoutPoints: [
+                    "Keep Impact to one clear sentence describing lasting change for a defined group.",
+                    "Use change verbs (improved, increased, reduced, strengthened, adopted, applied) for Outcomes.",
+                    "Draw a clear line between outputs/outcomes you directly deliver and long-term impact you contribute to."
+                ],
+                notes: "Use change verbs for outcomes (improved, increased, reduced, strengthened, adopted, applied, gained) rather than activity verbs (train, conduct, organise, provide, deliver, distribute, implement).",
+                prompt: "Convert these weak or activity-style statements into strong outcome statements naming who changes, what changes, and by when, keeping my exact facts.",
+                quiz: {
+                    question: "Which statement is written as a strong Outcome rather than an Activity or Output?",
+                    options: [
+                        "Train 400 primary school teachers in reading instruction",
+                        "Teachers apply structured reading methods in daily lessons",
+                        "Distribute 2,000 reading workbooks to target schools"
+                    ],
+                    correct: 1,
+                    explanation: "Outcomes describe changes in people, practices, or conditions ('Teachers apply...'), whereas training or distributing items are activities/outputs."
+                },
+                assignmentPrompt: "Draft 1 Impact statement, 2 Outcome statements, and state your Accountability Line:"
+            },
+            {
+                id: 4,
+                title: "Module 4: Pathway of Change, Assumptions, Risks & Evidence",
+                desc: "Backward-map your pathway, write If–Then–Because causal links, log Causal/Contextual/Delivery assumptions, and grade evidence strength.",
+                lessons: [
+                    { label: "Lesson 4.1: Backward Mapping & Writing If–Then–Because Causal Chains", guideKey: "pathway-evidence" },
+                    { label: "Lesson 4.2: Causal, Contextual & Delivery Assumptions, Risks & Evidence Grading", guideKey: "pathway-evidence" }
+                ],
+                studyLinks: [
+                    { label: "Detailed PPT (4 Slides)", action: "openPptModule(4)" },
+                    { label: "Audio & Handwritten Notes", action: "switchDashTab('audio')" },
+                    { label: "Flashcards & Quiz Bank", action: "openModuleFlashcards(4)" },
+                    { label: "Videos, Books & Blogs", action: "switchDashTab('external')" }
+                ],
+                resources: [
+                    { label: "Handbook: Pathway, If–Then–Because, Risk Register & Evidence Base", guideKey: "pathway-evidence" }
+                ],
+                promptLinks: [
+                    { label: "AI Prompt Library: If–Then–Because Logic & Evidence Prompts", guideKey: "prompts-m4" }
+                ],
+                handoutPoints: [
+                    "Every causal step should articulate IF [result/output] → THEN [next result] → BECAUSE [mechanism].",
+                    "Document assumptions across Causal, Contextual, and Delivery layers.",
+                    "Rate evidence honestly (Strong, Moderate, Emerging) and plan learning where evidence is thin."
+                ],
+                notes: "Evidence tiers: Strong (High — RCTs, systematic reviews, quasi-experimental), Moderate (Medium — evaluations, mixed-methods, surveys), Emerging (Low — pilots, case studies, practitioner/community voices).",
+                prompt: "Critique each If-Then-Because link below and flag any missing 'because' mechanism or unstated causal, contextual, or delivery assumption.",
+                quiz: {
+                    question: "In an If–Then–Because chain, what is the specific role of the 'BECAUSE' clause?",
+                    options: [
+                        "It lists the total budget required for the activity",
+                        "It explains the causal mechanism why one result leads to the next",
+                        "It names the donor funding the grant"
+                    ],
+                    correct: 1,
+                    explanation: "The 'because' forces you to explain the underlying mechanism—the exact point reviewers examine for logical credibility."
+                },
+                assignmentPrompt: "Write two complete If–Then–Because causal sentences and one Causal Assumption:"
+            },
+            {
+                id: 5,
+                title: "Module 5: Results Framework, Stakeholders & Cross-Cutting Lenses",
+                desc: "Operationalize SMART indicators, baselines, targets, and disaggregation; map stakeholders; and integrate cross-cutting lenses.",
+                lessons: [
+                    { label: "Lesson 5.1: SMART Indicators, 5 Operational Questions, Formulas & Disaggregation", guideKey: "rf-stakeholders-lenses" },
+                    { label: "Lesson 5.2: Stakeholder Mapping, Enabling Factors & 6 Cross-Cutting Lenses", guideKey: "rf-stakeholders-lenses" }
+                ],
+                studyLinks: [
+                    { label: "Detailed PPT (4 Slides)", action: "openPptModule(5)" },
+                    { label: "Icons & Notes + Infographic", action: "switchDashTab('infographics')" },
+                    { label: "Flashcards & Quiz Bank", action: "openModuleFlashcards(5)" },
+                    { label: "Questions & Quizzes Hub", action: "switchDashTab('quizzes')" }
+                ],
+                resources: [
+                    { label: "Handbook: Results Framework, Indicator Guide & Cross-Cutting Lenses", guideKey: "rf-stakeholders-lenses" }
+                ],
+                promptLinks: [
+                    { label: "AI Prompt Library: SMART Indicators & Cross-Cutting Lenses Prompts", guideKey: "prompts-m5" }
+                ],
+                handoutPoints: [
+                    "Pair every result with SMART indicators, clear baselines, targets, verification methods, and reporting frequency.",
+                    "Disaggregate indicators by sex, age, disability, and location.",
+                    "Embed Gender, Disability/Inclusion, Safeguarding/PSEA, Conflict Sensitivity, Climate, and Local Ownership."
+                ],
+                notes: "Cross-cutting lenses: Gender equality, Disability & inclusion, Safeguarding & PSEA, Conflict sensitivity & do no harm, Climate & environment, Local ownership & sustainability, plus Accountability to affected people.",
+                prompt: "Suggest practical SMART indicators (count, percentage, rate, index, or milestone) and disaggregation categories (sex, age, disability, location) for these outcomes.",
+                quiz: {
+                    question: "Which five questions operationalize an outcome indicator so it is ready for donor submission?",
+                    options: [
+                        "Who/what changes, baseline, target threshold, by when, and how verified",
+                        "Logo size, font style, page limit, cover color, and annex count",
+                        "Staff salaries, office rent, vehicle mileage, per diem, and audit firm"
+                    ],
+                    correct: 0,
+                    explanation: "Every outcome indicator must define who/what changes, the starting baseline, target threshold, timeframe, and verification method/source."
+                },
+                assignmentPrompt: "Define 1 Outcome Indicator with Baseline, Target, Means of Verification, and Disaggregation:"
+            },
+            {
+                id: 6,
+                title: "Module 6: MEAL Plan, ToC Narrative & Donor-Readiness Check",
+                desc: "Structure your MEAL plan, write a 400–600 word ToC narrative across 6 prompts, and score at least 85% on the Donor-Readiness Checklist.",
+                lessons: [
+                    { label: "Lesson 6.1: MEAL Evaluation Criteria, Data Collection & Data Quality/Ethics", guideKey: "meal-narrative-checklist" },
+                    { label: "Lesson 6.2: 6-Paragraph Narrative ToC (400–600 Words), Readiness Scorecard & Worked Example", guideKey: "meal-narrative-checklist" }
+                ],
+                studyLinks: [
+                    { label: "Detailed PPT (4 Slides)", action: "openPptModule(6)" },
+                    { label: "Questions & Quizzes Hub", action: "switchDashTab('quizzes')" },
+                    { label: "Flashcards & Mind Map", action: "openModuleFlashcards(6)" },
+                    { label: "Downloads & Worksheets", action: "switchDashTab('downloads')" }
+                ],
+                resources: [
+                    { label: "Handbook: MEAL Plan, 6-Prompt Narrative, Readiness Checklist & Worked Example", guideKey: "meal-narrative-checklist" }
+                ],
+                promptLinks: [
+                    { label: "AI Prompt Library: 6-Prompt Narrative & Donor-Readiness Prompts", guideKey: "prompts-m6" }
+                ],
+                handoutPoints: [
+                    "Connect MEAL routines to learning questions, data quality verification, and ethical safeguards.",
+                    "Write a coherent 400–600 word narrative across the 6 structured ToC prompts.",
+                    "Score 85%+ (29/34+) on the Donor-Readiness Scorecard before submitting your proposal."
+                ],
+                notes: "Aim for 85%+ (29+ of 34 points) on the Donor-Readiness Checklist before submitting your proposal or concept note.",
+                prompt: "Draft a 450-word Theory of Change narrative answering the 6 toolkit prompts using strictly my provided notes, with zero invented citations or statistics.",
+                quiz: {
+                    question: "What minimum score on the 34-point Donor-Readiness Checklist indicates a strong, submission-ready Theory of Change?",
+                    options: [
+                        "50% or above (17+ points)",
+                        "70% to 84% (24–28 points)",
+                        "85% or above (29+ points)"
+                    ],
+                    correct: 2,
+                    explanation: "85%+ indicates a strong ToC; 70–84% needs polish; below 70% requires revising the underlying logic first."
+                },
+                assignmentPrompt: "Draft your 6-paragraph Theory of Change Narrative (or executive summary paragraph):"
+            }
+        ];
+
+        const CHECKLIST_ITEMS = [
+            { area: "Logic", text: "The impact is a lasting change for a defined group, not an activity." },
+            { area: "Logic", text: "Each outcome is a change in people, practice or conditions (not an activity or output)." },
+            { area: "Logic", text: "Outcomes are necessary and, together, sufficient to reach the impact." },
+            { area: "Logic", text: "Every causal link has a 'because' that a skeptical reviewer would accept." },
+            { area: "Logic", text: "Every output and activity leads to at least one outcome (nothing orphaned)." },
+            { area: "Evidence", text: "The problem is described with recent data and named sources." },
+            { area: "Evidence", text: "Key causal links are supported by evidence, and weak areas are acknowledged." },
+            { area: "Measurement", text: "Every result has at least one SMART indicator with baseline and target." },
+            { area: "Measurement", text: "Indicators are defined (numerator, denominator, source, frequency, responsible)." },
+            { area: "Measurement", text: "Indicators are disaggregated by sex, age and disability where relevant." },
+            { area: "Assumptions", text: "Assumptions and risks are specific, scored and linked to mitigation actions." },
+            { area: "Inclusion", text: "Gender, disability, safeguarding and conflict sensitivity are addressed in the design." },
+            { area: "Feasibility", text: "Scale, timeframe and budget are realistic for the outcomes promised." },
+            { area: "Feasibility", text: "Roles of partners and stakeholders are clear." },
+            { area: "Learning", text: "A MEAL plan explains how results will be tracked and used to adapt." },
+            { area: "Presentation", text: "The diagram and narrative tell the same story and use the donor's terminology." },
+            { area: "Presentation", text: "A non-specialist can understand the theory in two minutes." }
+        ];
+
+        let config = JSON.parse(safeGetItem('toc_config')) || {
+            regETB: 10,
+            regUSD: 0.20,
+            certETB: 100,
+            certUSD: 2.00,
+            adminPhone: "0917106325",
+            certLogo: "MT CONSULTANCY",
+            certIssuerUrl: DEFAULT_CERT_ISSUER_URL
+        };
+        let users = JSON.parse(safeGetItem('toc_users')) || [];
+        let currentUser = JSON.parse(safeGetItem('toc_currentUser')) || null;
+        let smsAlerts = JSON.parse(safeGetItem('toc_sms_alerts')) || [];
+        let isAdmin = false;
+        let activeFlashcardsList = [...FLASHCARDS_DATA];
+        let bankQuizResults = JSON.parse(safeGetItem('toc_bank_quiz_results')) || {};
+
+        function triggerFileDownload(filename, content) {
+            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function downloadCurrentReaderGuide() {
+            if (!activeReaderKey || !TOOLKIT_GUIDES[activeReaderKey]) return;
+            const g = TOOLKIT_GUIDES[activeReaderKey];
+            triggerFileDownload(`${activeReaderKey}.txt`, `${g.title}\n${"=".repeat(g.title.length)}\n\n${g.plainText}\n`);
+        }
+
+        function downloadAllHandbooks() {
+            const keys = ["handbook-overview", "terminology-snapshot", "problem-analysis", "impact-outcomes", "pathway-evidence", "rf-stakeholders-lenses", "meal-narrative-checklist"];
+            const out = keys.map(k => `## ${TOOLKIT_GUIDES[k].title}\n\n${TOOLKIT_GUIDES[k].plainText}`).join("\n\n" + "-".repeat(60) + "\n\n");
+            triggerFileDownload("ToC_Complete_Handbooks.txt", out);
+        }
+
+        function downloadAllHandouts() {
+            const out = MODULES_DATA.map(m =>
+                `${m.title} — HANDOUT\n${"=".repeat(m.title.length + 10)}\n${m.handoutPoints.map((pt, i) => `${i + 1}. ${pt}`).join("\n")}\n\nSummary Notes: ${m.notes}`
+            ).join("\n\n" + "-".repeat(60) + "\n\n");
+            triggerFileDownload("ToC_Module_Handouts.txt", out);
+        }
+
+        function downloadHandwrittenNotes() {
+            const out = HANDWRITTEN_NOTES.map(h =>
+                `[Module ${h.mod}] ${h.title}\n${h.bullets.map(b => `  * ${b}`).join("\n")}`
+            ).join("\n\n" + "-".repeat(50) + "\n\n");
+            triggerFileDownload("ToC_Handwritten_Notes.txt", out);
+        }
+
+        function downloadIconsNotes() {
+            const out = ICONS_WITH_NOTES.map(ic =>
+                `${ic.icon} ${ic.title}\nNote: ${ic.note}`
+            ).join("\n\n" + "-".repeat(45) + "\n\n");
+            triggerFileDownload("ToC_Icons_With_Notes.txt", out);
+        }
+
+        function downloadAllAudioScripts() {
+            const out = AUDIO_SCRIPTS.map(a =>
+                `[Module ${a.mod}] ${a.title} (${a.duration})\n${a.script}`
+            ).join("\n\n" + "-".repeat(50) + "\n\n");
+            triggerFileDownload("ToC_Audio_Notes_Scripts.txt", out);
+        }
+
+        function downloadToolsDirectory() {
+            const out = AI_AND_VIDEO_TOOLS.map(t =>
+                `[${t.cat}] ${t.name}\n${t.desc}\nURL: ${t.url}`
+            ).join("\n\n" + "-".repeat(50) + "\n\n");
+            triggerFileDownload("ToC_AI_And_Video_Tools.txt", out);
+        }
+
+        function downloadInfographicsSummary() {
+            const out = INFOGRAPHICS_DATA.map(info =>
+                `${info.title}\n${info.caption}\nFlow: ${info.steps.join(" -> ")}`
+            ).join("\n\n" + "-".repeat(50) + "\n\n");
+            triggerFileDownload("ToC_Infographics_Guide.txt", out);
+        }
+
+        function downloadExternalResourcesList() {
+            const out = EXTERNAL_RESOURCES.map(r =>
+                `[${r.type}] ${r.title}\n${r.desc}\nLink: ${r.url}`
+            ).join("\n\n" + "-".repeat(50) + "\n\n");
+            triggerFileDownload("ToC_Videos_Books_Blogs_Resources.txt", out);
+        }
+
+        function downloadAllPptSlides() {
+            const out = Object.entries(PPT_DECKS).map(([modId, slides]) => {
+                const header = `MODULE ${modId} DETAILED PPT SLIDE DECK\n${"=".repeat(35)}`;
+                const body = slides.map(s => `[${s.tag}] ${s.title}\n${s.bullets.map(b => `  * ${b}`).join("\n")}\n  ${s.notes || ""}`).join("\n\n");
+                return `${header}\n\n${body}`;
+            }).join("\n\n" + "=".repeat(60) + "\n\n");
+            triggerFileDownload("ToC_Detailed_PPT_Deck.txt", out);
+        }
+
+        function downloadFlashcards() {
+            const out = FLASHCARDS_DATA.map((c, idx) =>
+                `Card ${idx + 1} (Module ${c.mod})\nFRONT: ${c.front}\nBACK:  ${c.back}`
+            ).join("\n\n" + "-".repeat(50) + "\n\n");
+            triggerFileDownload("ToC_Study_Flashcards.txt", out);
+        }
+
+        function downloadAllMindMaps() {
+            const out = MINDMAPS_DATA.map(mm => {
+                const branchesText = mm.branches.map(b => `  [${b.title}]\n    - ${b.items.join("\n    - ")}`).join("\n");
+                return `CENTRAL NODE: ${mm.center}\n${branchesText}`;
+            }).join("\n\n" + "-".repeat(60) + "\n\n");
+            triggerFileDownload("ToC_Visual_Mind_Maps.txt", out);
+        }
+
+        function downloadCourseText() {
+            const out = MODULES_DATA.map(m =>
+                `${m.title}\n${"=".repeat(m.title.length)}\nOverview: ${m.desc}\n\nText Notes: ${m.notes}\n\nFeatured AI Prompt: ${m.prompt}\n\nQuiz: ${m.quiz.question}\nAnswer: ${m.quiz.options[m.quiz.correct]} (${m.quiz.explanation})\n\nAssignment Prompt: ${m.assignmentPrompt}`
+            ).join("\n\n" + "=".repeat(60) + "\n\n");
+            triggerFileDownload("Results_Based_ToC_Course_Text.txt", out);
+        }
+
+        function downloadWorksheetsExport() {
+            const fields = [
+                ["Worksheet 1 - Effects", "ws-tree-effects"],
+                ["Worksheet 1 - Core Problem", "ws-tree-core"],
+                ["Worksheet 1 - Direct Causes", "ws-tree-direct"],
+                ["Worksheet 1 - Root Causes", "ws-tree-root"],
+                ["Worksheet 2 (Row 1) - IF", "ws-if-1"],
+                ["Worksheet 2 (Row 1) - THEN", "ws-then-1"],
+                ["Worksheet 2 (Row 1) - BECAUSE", "ws-bec-1"],
+                ["Worksheet 3 - Impact Indicator", "ws-rf-imp-ind"],
+                ["Worksheet 3 - Outcome 1 Indicator", "ws-rf-oc1-ind"],
+                ["Worksheet 3 - Outcome 2 Indicator", "ws-rf-oc2-ind"],
+                ["Worksheet 3 - Output 1.1 Indicator", "ws-rf-out1-ind"]
+            ];
+            const lines = fields.map(([label, id]) => {
+                const el = document.getElementById(id);
+                return `${label}:\n${el ? el.value : ""}`;
+            });
+            const scoreBadge = document.getElementById("checklist-score-badge");
+            lines.push(`Donor-Readiness Scorecard:\n${scoreBadge ? scoreBadge.innerText : ""}`);
+            triggerFileDownload("ToC_Worksheets_And_Scorecard.txt", lines.join("\n\n") + "\n");
+        }
+
+        /* Audio Narration Controls (Web Speech API) */
+        function playAudioScript(idx) {
+            const item = AUDIO_SCRIPTS[idx];
+            if (!item) return;
+            if (!('speechSynthesis' in window)) {
+                alert(`Audio Script (${item.title}):\n\n${item.script}`);
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(item.script);
+            const rateSel = document.getElementById('audio-rate-select');
+            utter.rate = rateSel ? parseFloat(rateSel.value) || 1 : 1;
+            window.speechSynthesis.speak(utter);
+        }
+
+        function stopAudioNarration() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function renderAudioNotesTab() {
+            const container = document.getElementById('audio-notes-container');
+            if (!container) return;
+            container.innerHTML = AUDIO_SCRIPTS.map((a, idx) => `
+                <div class="audio-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                        <div>
+                            <h4 style="color:var(--dark);">${a.title} <span style="font-size:0.8rem; color:var(--primary);">(${a.duration})</span></h4>
+                        </div>
+                        <button class="btn-sm" onclick="playAudioScript(${idx})">▶ Listen Aloud</button>
+                    </div>
+                    <div class="audio-script-box"><strong>Audio Transcript:</strong> ${a.script}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderToolsTab() {
+            const container = document.getElementById('tools-directory-container');
+            if (!container) return;
+            container.innerHTML = AI_AND_VIDEO_TOOLS.map(t => `
+                <div class="ext-card">
+                    <span class="ext-tag">${t.cat}</span>
+                    <h4>${t.name}</h4>
+                    <p>${t.desc}</p>
+                    <a href="${t.url}" target="_blank" rel="noopener noreferrer">${t.cta} ↗</a>
+                </div>
+            `).join('');
+        }
+
+        function renderIconsTab() {
+            const container = document.getElementById('icons-notes-container');
+            if (!container) return;
+            container.innerHTML = ICONS_WITH_NOTES.map(ic => `
+                <div class="icon-note-card">
+                    <div class="icon-badge">${ic.icon}</div>
+                    <div>
+                        <h4>${ic.title}</h4>
+                        <p>${ic.note}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* PPT Slide Controls */
+        function openPptModule(modId) {
+            currentPptModuleId = Number(modId) || 1;
+            currentPptSlideIndex = 0;
+            const sel = document.getElementById('ppt-module-select');
+            if (sel) sel.value = String(currentPptModuleId);
+            switchDashTab('ppt');
+            renderPptSlide();
+        }
+
+        function selectPptModule(modId) {
+            currentPptModuleId = Number(modId) || 1;
+            currentPptSlideIndex = 0;
+            renderPptSlide();
+        }
+
+        function jumpToPptSlide(idx) {
+            const slides = PPT_DECKS[currentPptModuleId] || [];
+            if (!slides.length) return;
+            currentPptSlideIndex = Math.max(0, Math.min(idx, slides.length - 1));
+            renderPptSlide();
+        }
+
+        function nextPptSlide() {
+            const slides = PPT_DECKS[currentPptModuleId] || [];
+            if (!slides.length) return;
+            currentPptSlideIndex = (currentPptSlideIndex + 1) % slides.length;
+            renderPptSlide();
+        }
+
+        function prevPptSlide() {
+            const slides = PPT_DECKS[currentPptModuleId] || [];
+            if (!slides.length) return;
+            currentPptSlideIndex = (currentPptSlideIndex - 1 + slides.length) % slides.length;
+            renderPptSlide();
+        }
+
+        function renderPptSlide() {
+            const slides = PPT_DECKS[currentPptModuleId] || [];
+            if (!slides.length) return;
+            const slide = slides[currentPptSlideIndex];
+            const stage = document.getElementById('ppt-slide-stage');
+            const notesBox = document.getElementById('ppt-speaker-notes-box');
+            const counter = document.getElementById('ppt-slide-counter');
+            const pills = document.getElementById('ppt-slide-pills');
+
+            if (stage) {
+                stage.innerHTML = `
+                    <div>
+                        <span class="ppt-slide-tag">${slide.tag}</span>
+                        <div class="ppt-slide-title">${slide.title}</div>
+                        <ul class="ppt-slide-bullets">${slide.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+                    </div>
+                    <div style="font-size:0.82rem; opacity:0.8; margin-top:1rem;">Results-Based Theory of Change & AI for Proposals — Detailed Presentation Mode</div>
+                `;
+            }
+            if (notesBox) {
+                notesBox.innerHTML = `<strong>🎤 Presenter & Study Notes:</strong> ${slide.notes || ''}`;
+            }
+            if (counter) {
+                counter.innerText = `Module ${currentPptModuleId} • Slide ${currentPptSlideIndex + 1} of ${slides.length}`;
+            }
+            if (pills) {
+                pills.innerHTML = slides.map((_, idx) =>
+                    `<button class="${idx === currentPptSlideIndex ? 'btn-sm' : 'btn-outline'}" style="padding:0.25rem 0.55rem; font-size:0.78rem;" onclick="jumpToPptSlide(${idx})">${idx + 1}</button>`
+                ).join('');
+            }
+        }
+
+        /* Quiz Bank & Reflection Questions Renderer */
+        function renderQuizBankTab() {
+            const container = document.getElementById('quiz-bank-container');
+            const refContainer = document.getElementById('reflection-questions-container');
+            if (!container || !refContainer) return;
+
+            container.innerHTML = QUIZ_BANK_ITEMS.map((item, idx) => {
+                const prev = bankQuizResults[item.id];
+                const optsHtml = item.opts.map((opt, oIdx) => `
+                    <label class="quiz-option">
+                        <input type="radio" name="bank-q-${item.id}" value="${oIdx}" ${prev && prev.selected === oIdx ? 'checked' : ''}> ${opt}
+                    </label>
+                `).join('');
+
+                return `
+                    <div class="quiz-box" style="margin-bottom:0.9rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+                            <h4>Q${idx + 1} (Module ${item.mod})</h4>
+                            ${prev ? `<span class="badge ${prev.correct ? 'badge-done' : 'badge-pending'}">${prev.correct ? '✓ Correct' : 'Reviewed'}</span>` : ''}
+                        </div>
+                        <p style="font-size:0.94rem; font-weight:600; margin-bottom:0.4rem;">${item.q}</p>
+                        ${optsHtml}
+                        <button class="btn-sm" style="margin-top:0.45rem;" onclick="checkBankQuiz('${item.id}')">Submit Answer</button>
+                        <div class="quiz-feedback" id="bank-fb-${item.id}" style="color:${prev ? (prev.correct ? 'var(--success)' : 'var(--danger)') : 'inherit'};">
+                            ${prev ? (prev.correct ? '✓ ' + item.exp : 'Explanation: ' + item.exp) : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            refContainer.innerHTML = `
+                <div class="handout-box">
+                    <h4>💬 Deep Donor-Review & Reflection Questions</h4>
+                    <ul>${REFLECTION_QUESTIONS.map(rq => `<li>${rq}</li>`).join('')}</ul>
+                </div>
+            `;
+            updateQuizBankBadge();
+        }
+
+        function checkBankQuiz(qid) {
+            const item = QUIZ_BANK_ITEMS.find(q => q.id === qid);
+            if (!item) return;
+            const selected = document.querySelector(`input[name="bank-q-${qid}"]:checked`);
+            const fb = document.getElementById(`bank-fb-${qid}`);
+            if (!selected) {
+                fb.style.color = "var(--danger)";
+                fb.innerText = "Please choose an answer first.";
+                return;
+            }
+            const chosenIdx = parseInt(selected.value, 10);
+            const isCorrect = chosenIdx === item.ans;
+            bankQuizResults[qid] = { selected: chosenIdx, correct: isCorrect };
+            safeSetItem('toc_bank_quiz_results', JSON.stringify(bankQuizResults));
+
+            fb.style.color = isCorrect ? "var(--success)" : "var(--danger)";
+            fb.innerText = isCorrect ? `✓ Correct! ${item.exp}` : `Not quite. ${item.exp}`;
+            updateQuizBankBadge();
+        }
+
+        function updateQuizBankBadge() {
+            const badge = document.getElementById('bank-quiz-score-badge');
+            if (!badge) return;
+            const entries = Object.values(bankQuizResults);
+            const answered = entries.length;
+            const correctCount = entries.filter(e => e.correct).length;
+            badge.innerText = `Quiz Bank: ${correctCount} / ${QUIZ_BANK_ITEMS.length} Correct (${answered} Answered)`;
+        }
+
+        /* Handouts Renderer */
+        function renderHandoutsTab() {
+            const container = document.getElementById('handouts-list-container');
+            if (!container) return;
+            container.innerHTML = MODULES_DATA.map(m => `
+                <div class="handout-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                        <h4>${m.title} — Learner Handout</h4>
+                        <a href="javascript:void(0)" onclick="openToolkitGuide('${m.lessons[0].guideKey}'); return false;">Open Detailed Guide →</a>
+                    </div>
+                    <ul>${m.handoutPoints.map(pt => `<li>${pt}</li>`).join('')}</ul>
+                </div>
+            `).join('');
+        }
+
+        /* Handwritten Notes Renderer */
+        function renderHandwrittenNotesTab() {
+            const container = document.getElementById('handwritten-notes-container');
+            if (!container) return;
+            container.innerHTML = HANDWRITTEN_NOTES.map(h => `
+                <div class="handwritten-sheet">
+                    <div class="handwritten-title">${h.title}</div>
+                    <div class="handwritten-body">
+                        <ul>${h.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* Infographics & Visual Diagram Renderer */
+        function renderInfographicsTab() {
+            const container = document.getElementById('infographics-container');
+            if (!container) return;
+            const flowCards = INFOGRAPHICS_DATA.map(info => `
+                <div class="infographic-card">
+                    <h4 style="color:var(--dark);">${info.title}</h4>
+                    <p style="font-size:0.88rem; color:#555; margin-top:0.2rem;">${info.caption}</p>
+                    <div class="infographic-steps">
+                        ${info.steps.map((st, idx) => `
+                            <span class="info-pill">${st}</span>
+                            ${idx < info.steps.length - 1 ? '<span class="info-arrow">→</span>' : ''}
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            const diagramSvg = `
+                <div class="visual-diagram-wrap">
+                    <h4 style="color:var(--dark); margin-bottom:0.5rem; text-align:left;">Visual Diagram: Theory of Change Causal Architecture</h4>
+                    <svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Theory of Change Causal Architecture Diagram">
+                        <rect x="10" y="30" width="160" height="80" rx="8" fill="#eef4ff" stroke="#004aad" stroke-width="2"/>
+                        <text x="90" y="62" text-anchor="middle" font-size="13" font-weight="bold" fill="#14213d">1. Problem &amp; Context</text>
+                        <text x="90" y="84" text-anchor="middle" font-size="11" fill="#334155">Data + Root Causes</text>
+
+                        <line x1="170" y1="70" x2="205" y2="70" stroke="#fca311" stroke-width="3"/>
+                        <polygon points="205,64 217,70 205,76" fill="#fca311"/>
+
+                        <rect x="217" y="30" width="165" height="80" rx="8" fill="#ecfdf5" stroke="#00a859" stroke-width="2"/>
+                        <text x="299" y="62" text-anchor="middle" font-size="13" font-weight="bold" fill="#14213d">2. If–Then–Because</text>
+                        <text x="299" y="84" text-anchor="middle" font-size="11" fill="#334155">Outputs → Outcomes</text>
+
+                        <line x1="382" y1="70" x2="417" y2="70" stroke="#fca311" stroke-width="3"/>
+                        <polygon points="417,64 429,70 417,76" fill="#fca311"/>
+
+                        <rect x="429" y="30" width="160" height="80" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+                        <text x="509" y="62" text-anchor="middle" font-size="13" font-weight="bold" fill="#14213d">3. MEAL &amp; Evidence</text>
+                        <text x="509" y="84" text-anchor="middle" font-size="11" fill="#334155">SMART + Assumptions</text>
+
+                        <line x1="589" y1="70" x2="624" y2="70" stroke="#fca311" stroke-width="3"/>
+                        <polygon points="624,64 636,70 624,76" fill="#fca311"/>
+
+                        <rect x="636" y="30" width="114" height="80" rx="8" fill="#14213d" stroke="#fca311" stroke-width="2"/>
+                        <text x="693" y="62" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">4. Proposal</text>
+                        <text x="693" y="84" text-anchor="middle" font-size="11" fill="#fca311">85%+ Ready</text>
+                    </svg>
+                </div>
+            `;
+            container.innerHTML = flowCards + diagramSvg;
+        }
+
+        /* External Resources Renderer */
+        function renderExternalResourcesTab() {
+            const container = document.getElementById('external-resources-container');
+            if (!container) return;
+            container.innerHTML = EXTERNAL_RESOURCES.map(r => `
+                <div class="ext-card">
+                    <span class="ext-tag">${r.type}</span>
+                    <h4>${r.title}</h4>
+                    <p>${r.desc}</p>
+                    <a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.cta} ↗</a>
+                </div>
+            `).join('');
+        }
+
+        /* Flashcards Controls */
+        function openModuleFlashcards(modId) {
+            const sel = document.getElementById('flashcard-filter');
+            if (sel) sel.value = String(modId);
+            switchDashTab('flashcards');
+            renderFlashcards();
+        }
+
+        function shuffleFlashcards() {
+            for (let i = activeFlashcardsList.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [activeFlashcardsList[i], activeFlashcardsList[j]] = [activeFlashcardsList[j], activeFlashcardsList[i]];
+            }
+            renderFlashcards();
+        }
+
+        function renderFlashcards() {
+            const container = document.getElementById('flashcards-container');
+            if (!container) return;
+            const filterVal = document.getElementById('flashcard-filter') ? document.getElementById('flashcard-filter').value : 'all';
+            const filtered = filterVal === 'all'
+                ? activeFlashcardsList
+                : activeFlashcardsList.filter(c => String(c.mod) === filterVal);
+
+            container.innerHTML = filtered.map((card, idx) => `
+                <div class="flashcard" id="fc-${idx}" onclick="this.classList.toggle('flipped'); const s = this.querySelector('.fc-state'); s.innerText = this.classList.contains('flipped') ? 'Answer / Back (Click to flip)' : 'Prompt / Front (Click to flip)'; const t = this.querySelector('.flashcard-text'); t.innerText = this.classList.contains('flipped') ? ${JSON.stringify(card.back)} : ${JSON.stringify(card.front)};">
+                    <div>
+                        <div class="flashcard-side">Module ${card.mod} • <span class="fc-state">Prompt / Front (Click to flip)</span></div>
+                        <div class="flashcard-text">${card.front}</div>
+                    </div>
+                    <div class="flashcard-footer">
+                        <span>Tap card to flip</span>
+                        <span>Card ${idx + 1}/${filtered.length}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* Mind Maps Renderer */
+        function renderMindMapsTab() {
+            const container = document.getElementById('mindmaps-container');
+            if (!container) return;
+            container.innerHTML = MINDMAPS_DATA.map(mm => `
+                <div class="mindmap-box">
+                    <div class="mindmap-center">🧠 ${mm.center}</div>
+                    <div class="mindmap-branches">
+                        ${mm.branches.map(b => `
+                            <div class="mindmap-branch">
+                                <div class="mindmap-branch-title">▸ ${b.title}</div>
+                                <ul>${b.items.map(item => `<li>${item}</li>`).join('')}</ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderFullCourseTextTab() {
+            const container = document.getElementById("full-course-text-container");
+            if (!container) return;
+            container.innerHTML = MODULES_DATA.map(m => `
+                <div class="text-reading-block">
+                    <strong>${m.title}</strong>
+                    <p style="margin-top:0.35rem;">${m.desc}</p>
+                    <p style="margin-top:0.4rem;"><strong>Text Notes:</strong> ${m.notes}</p>
+                    <p style="margin-top:0.4rem;"><strong>AI Prompt:</strong> <em>"${m.prompt}"</em></p>
+                </div>
+            `).join("");
+        }
+
+        function init() {
+            if (!config.certIssuerUrl) {
+                config.certIssuerUrl = DEFAULT_CERT_ISSUER_URL;
+            }
+            if (!config.certLogo) {
+                config.certLogo = "MT CONSULTANCY";
+            }
+            updateUIWithSettings();
+            renderModules();
+            renderPptSlide();
+            renderAudioNotesTab();
+            renderToolsTab();
+            renderIconsTab();
+            renderHandoutsTab();
+            renderHandwrittenNotesTab();
+            renderInfographicsTab();
+            renderFlashcards();
+            renderMindMapsTab();
+            renderExternalResourcesTab();
+            renderQuizBankTab();
+            renderFullCourseTextTab();
+            renderChecklist();
+            loadWorksheets();
+
+            const signedAccess = parseAccessFromUrl();
+            if (signedAccess && activateSignedAccess(signedAccess)) {
+                return;
+            }
+
+            if (currentUser) {
+                routeCurrentUser();
+            } else {
+                showView('landing');
+            }
+        }
+
+        window.addEventListener('hashchange', () => {
+            const signedAccess = parseAccessFromUrl();
+            if (signedAccess) {
+                activateSignedAccess(signedAccess);
+            }
+        });
+
+        function routeCurrentUser() {
+            users = JSON.parse(safeGetItem('toc_users')) || users;
+            const fresh = users.find(u => u.id === currentUser.id) || currentUser;
+            currentUser = fresh;
+            saveData();
+
+            if (currentUser.certPendingApproval && !currentUser.certApproved) {
+                showPendingScreen(currentUser, 'Certificate');
+            } else if (!currentUser.regApproved) {
+                showPendingScreen(currentUser, 'Registration');
+            } else {
+                openCourseView(currentUser);
+            }
+        }
+
+        function openCourseView(user) {
+            document.getElementById('student-name-display').innerText = user.name;
+            renderModules();
+            renderPptSlide();
+            renderAudioNotesTab();
+            renderToolsTab();
+            renderIconsTab();
+            renderHandoutsTab();
+            renderHandwrittenNotesTab();
+            renderInfographicsTab();
+            renderFlashcards();
+            renderMindMapsTab();
+            renderExternalResourcesTab();
+            renderQuizBankTab();
+            renderFullCourseTextTab();
+            updateProgressUI();
+            showView('course');
+        }
+
+        function openCertificateView(user) {
+            renderCertificateLogo();
+            document.getElementById('cert-name').innerText = user.name;
+            document.getElementById('cert-date').innerText = user.certApprovedDate || new Date().toLocaleDateString();
+            const issuerUrl = config.certIssuerUrl || DEFAULT_CERT_ISSUER_URL;
+            const anchor = document.getElementById('cert-issuer-anchor');
+            if (anchor) {
+                anchor.href = issuerUrl;
+                anchor.innerText = issuerUrl;
+            }
+            showView('certificate');
+        }
+
+        function showPendingScreen(user, stage) {
+            const adminPhone = config.adminPhone || "0917106325";
+            document.getElementById('pending-message').innerHTML =
+                `Thank you, <strong>${user.name}</strong>. Your <strong>${stage}</strong> payment has been directed to Telebirr <strong>${adminPhone}</strong> and an SMS alert was sent to the Admin.`;
+
+            const isCert = stage === 'Certificate';
+            const isApproved = isCert ? !!user.certApproved : !!user.regApproved;
+            const badge = document.getElementById('pending-access-status');
+            const linkArea = document.getElementById('pending-approved-link-area');
+
+            if (isApproved) {
+                badge.className = "badge badge-done";
+                badge.innerText = `Approved by Admin (${stage})`;
+                const link = buildApprovedLink(user, isCert ? 'cert' : 'course');
+                const anchor = document.getElementById('pending-approved-link-anchor');
+                anchor.href = link;
+                anchor.innerText = link;
+                linkArea.classList.remove('hidden');
+            } else {
+                badge.className = "badge badge-pending";
+                badge.innerText = `Pending Admin Approval (${stage})`;
+                linkArea.classList.add('hidden');
+            }
+            showView('pending');
+        }
+
+        function checkApprovalStatus() {
+            const signedAccess = parseAccessFromUrl();
+            if (signedAccess && activateSignedAccess(signedAccess)) return;
+            if (!currentUser) return;
+            routeCurrentUser();
+        }
+
+        function openApprovedDestination() {
+            if (!currentUser) return;
+            if (currentUser.certApproved && currentUser.certPendingApproval) {
+                openCertificateView(currentUser);
+            } else if (currentUser.regApproved) {
+                openCourseView(currentUser);
+            }
+        }
+
+        function copyApprovedLink(customText) {
+            const text = customText || document.getElementById('pending-approved-link-anchor').innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => alert("Shareable Admin-Approved Link copied!")).catch(() => alert("Link: " + text));
+            } else {
+                alert("Link: " + text);
+            }
+        }
+
+        function updateUIWithSettings() {
+            const adminPhone = config.adminPhone || "0917106325";
+            const issuerUrl = config.certIssuerUrl || DEFAULT_CERT_ISSUER_URL;
+            const ids = {
+                'display-reg-price-etb': config.regETB,
+                'display-reg-price-usd': Number(config.regUSD).toFixed(2),
+                'display-cert-price-etb': config.certETB,
+                'display-cert-price-usd': Number(config.certUSD).toFixed(2),
+                'pay-reg-price-etb': config.regETB,
+                'pay-reg-price-usd': Number(config.regUSD).toFixed(2),
+                'pay-cert-price-etb': config.certETB,
+                'pay-cert-price-usd': Number(config.certUSD).toFixed(2),
+                'telebirr-target-display': adminPhone,
+                'sms-log-target': adminPhone
+            };
+
+            for (const [id, value] of Object.entries(ids)) {
+                const el = document.getElementById(id);
+                if (el) el.innerText = value;
+            }
+
+            document.getElementById('admin-reg-etb').value = config.regETB;
+            document.getElementById('admin-reg-usd').value = config.regUSD;
+            document.getElementById('admin-cert-etb').value = config.certETB;
+            document.getElementById('admin-cert-usd').value = config.certUSD;
+            document.getElementById('admin-telebirr-phone').value = adminPhone;
+            document.getElementById('admin-cert-issuer-url').value = issuerUrl;
+            document.getElementById('admin-cert-logo').value = config.certLogo || "MT CONSULTANCY";
+
+            const certAnchor = document.getElementById('cert-issuer-anchor');
+            if (certAnchor) {
+                certAnchor.href = issuerUrl;
+                certAnchor.innerText = issuerUrl;
+            }
+
+            renderCertificateLogo();
+        }
+
+        function getMtConsultancyLogoSvg(labelText) {
+            const cleanLabel = (labelText || "MT CONSULTANCY").slice(0, 18);
+            return `
+                <svg viewBox="0 0 120 120" width="114" height="114" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MT Consultancy Logo">
+                    <circle cx="60" cy="60" r="56" fill="#14213d" stroke="#fca311" stroke-width="4"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#004aad" stroke-width="2"/>
+                    <path d="M24 72 L38 38 L52 62 L66 38 L80 62 L96 38 L96 72 Z" fill="#fca311"/>
+                    <text x="60" y="90" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#ffffff" letter-spacing="0.5">${cleanLabel}</text>
+                </svg>
+            `;
+        }
+
+        function renderCertificateLogo() {
+            const box = document.getElementById('cert-logo-box');
+            if (!box) return;
+            const val = (config.certLogo || "MT CONSULTANCY").trim();
+            if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("data:image/")) {
+                box.innerHTML = `<img src="${val}" alt="MT Consultancy Logo" onerror="this.outerHTML = getMtConsultancyLogoSvg('MT CONSULTANCY');">`;
+            } else {
+                box.innerHTML = getMtConsultancyLogoSvg(val);
+            }
+        }
+
+        function dispatchAdminSmsAlert(studentName, studentPhone, stage, amount, method, txRef) {
+            const adminPhone = config.adminPhone || "0917106325";
+            const smsBody = `ToC Admin SMS Alert: ${studentName} (${studentPhone}) paid ${amount} via ${method} to Telebirr ${adminPhone} for ${stage}. Ref: ${txRef || 'N/A'}. Approve in Admin Portal (5402402).`;
+
+            smsAlerts.unshift({
+                to: adminPhone,
+                message: smsBody,
+                time: new Date().toLocaleString()
+            });
+            safeSetItem('toc_sms_alerts', JSON.stringify(smsAlerts));
+
+            alert(
+                `Payment sent to Telebirr ${adminPhone}!\n\nSMS Alert Sent & Logged for Admin (${adminPhone}):\n"${smsBody}"\n\nYour access is now PENDING Admin approval.`
+            );
+        }
+
+        function processPayment(type, method, currency) {
+            if (type === 'Registration') {
+                const name = document.getElementById('reg-name').value.trim();
+                const email = document.getElementById('reg-email').value.trim();
+                const phone = document.getElementById('reg-phone').value.trim();
+                const txRef = document.getElementById('reg-txref').value.trim();
+
+                if (!name || !email || !phone) {
+                    alert("Please fill in your full name, email, and phone number.");
+                    return;
+                }
+
+                const amount = currency === 'ETB' ? `${config.regETB} Birr` : `$${Number(config.regUSD).toFixed(2)} USD`;
+
+                currentUser = {
+                    id: "stu_" + Date.now() + "_" + Math.random().toString(36).substring(2, 6),
+                    name,
+                    email,
+                    phone,
+                    regMethod: method,
+                    regCurrency: currency,
+                    regAmount: amount,
+                    regTxRef: txRef || "N/A",
+                    regApproved: false,
+                    hasCertificate: false,
+                    certPendingApproval: false,
+                    certApproved: false,
+                    completedQuizzes: {},
+                    assignments: {}
+                };
+                users.push(currentUser);
+                saveData();
+
+                dispatchAdminSmsAlert(name, phone, "Registration", amount, method, txRef);
+                showPendingScreen(currentUser, "Registration");
+
+            } else if (type === 'Certificate') {
+                if (!currentUser) return;
+                const txRef = document.getElementById('cert-txref').value.trim();
+                const amount = currency === 'ETB' ? `${config.certETB} Birr` : `$${Number(config.certUSD).toFixed(2)} USD`;
+
+                currentUser.certMethod = method;
+                currentUser.certCurrency = currency;
+                currentUser.certAmount = amount;
+                currentUser.certTxRef = txRef || "N/A";
+                currentUser.certPendingApproval = true;
+                currentUser.certApproved = false;
+                syncUserRecord();
+
+                dispatchAdminSmsAlert(currentUser.name, currentUser.phone, "Certificate", amount, method, txRef);
+                showPendingScreen(currentUser, "Certificate");
+            }
+        }
+
+        function adminApproveStudent(userId, scope) {
+            const user = users.find(u => u.id === userId);
+            if (!user) return;
+
+            if (scope === 'reg') {
+                user.regApproved = true;
+            } else if (scope === 'cert') {
+                user.certApproved = true;
+                user.certPendingApproval = true;
+                user.hasCertificate = true;
+                user.certApprovedDate = new Date().toLocaleDateString();
+            }
+
+            if (currentUser && currentUser.id === user.id) {
+                currentUser = user;
+            }
+            saveData();
+            renderAdminData();
+            const shareLink = buildApprovedLink(user, scope === 'cert' ? 'cert' : 'course');
+            alert(`Approved ${scope === 'cert' ? 'Certificate' : 'Registration'} for ${user.name}!\n\nSend this cross-device link to the student:\n${shareLink}`);
+        }
+
+        function openToolkitGuide(guideKey) {
+            const guide = TOOLKIT_GUIDES[guideKey];
+            if (!guide) return;
+            activeReaderKey = guideKey;
+            document.getElementById('reader-title').innerText = guide.title;
+            document.getElementById('reader-body').innerHTML = guide.html;
+            document.getElementById('resource-reader').classList.remove('hidden');
+            document.getElementById('resource-reader').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function closeResourceReader() {
+            activeReaderKey = null;
+            document.getElementById('resource-reader').classList.add('hidden');
+        }
+
+        function renderModules() {
+            const container = document.getElementById('modules-container');
+            container.innerHTML = '';
+
+            const completedQuizzes = (currentUser && currentUser.completedQuizzes) ? currentUser.completedQuizzes : {};
+            const assignments = (currentUser && currentUser.assignments) ? currentUser.assignments : {};
+
+            MODULES_DATA.forEach(m => {
+                const isDone = !!completedQuizzes[m.id];
+                const savedText = assignments[m.id] || '';
+
+                const lessonsHtml = m.lessons.map(l =>
+                    `<li>📘 <a href="javascript:void(0)" onclick="openToolkitGuide('${l.guideKey}'); return false;">${l.label}</a></li>`
+                ).join('');
+
+                const studyLinksHtml = m.studyLinks.map(s =>
+                    `<li>✨ <a href="javascript:void(0)" onclick="${s.action}; return false;">${s.label}</a></li>`
+                ).join('');
+
+                const resourcesHtml = m.resources.map(r =>
+                    `<li>📖 <a href="javascript:void(0)" onclick="openToolkitGuide('${r.guideKey}'); return false;">${r.label}</a></li>`
+                ).join('');
+
+                const promptLinksHtml = m.promptLinks.map(p =>
+                    `<li>🤖 <a href="javascript:void(0)" onclick="openToolkitGuide('${p.guideKey}'); return false;">${p.label}</a></li>`
+                ).join('');
+
+                const optionsHtml = m.quiz.options.map((opt, idx) => `
+                    <label class="quiz-option">
+                        <input type="radio" name="quiz-${m.id}" value="${idx}" ${isDone && idx === m.quiz.correct ? 'checked' : ''}> ${opt}
+                    </label>
+                `).join('');
+
+                container.innerHTML += `
+                    <div class="module">
+                        <div class="module-header">
+                            <div>
+                                <h3>${m.title}</h3>
+                                <p>${m.desc}</p>
+                            </div>
+                            <span class="badge ${isDone ? 'badge-done' : 'badge-pending'}" id="mod-badge-${m.id}">
+                                ${isDone ? '✓ Completed' : 'In Progress'}
+                            </span>
+                        </div>
+
+                        <div class="content-columns">
+                            <div class="content-box">
+                                <h4>Lessons (Text)</h4>
+                                <ul>${lessonsHtml}</ul>
+                            </div>
+                            <div class="content-box">
+                                <h4>PPT, Audio, Tools &amp; Icons</h4>
+                                <ul>${studyLinksHtml}</ul>
+                            </div>
+                            <div class="content-box">
+                                <h4>Handbooks &amp; Prompt Library</h4>
+                                <ul>
+                                    ${resourcesHtml}
+                                    ${promptLinksHtml}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="notes-box"><strong>Course Text Notes:</strong> ${m.notes}</div>
+                        <div class="prompt-box">🤖 <strong>Featured AI Prompt:</strong> <em>"${m.prompt}"</em></div>
+
+                        <div class="activity-grid">
+                            <div class="quiz-box">
+                                <h4>📝 Knowledge Check</h4>
+                                <p style="font-size: 0.92rem; font-weight: 600; margin-bottom: 0.4rem;">${m.quiz.question}</p>
+                                ${optionsHtml}
+                                <button class="btn-sm" style="margin-top: 0.5rem;" onclick="checkQuiz(${m.id})">Check Answer</button>
+                                <div class="quiz-feedback" id="quiz-fb-${m.id}" style="color: ${isDone ? 'var(--success)' : 'inherit'};">
+                                    ${isDone ? '✓ ' + m.quiz.explanation : ''}
+                                </div>
+                            </div>
+
+                            <div class="assign-box">
+                                <h4>✍️ Practical Assignment</h4>
+                                <p style="font-size: 0.88rem; color: #555; margin-bottom: 0.4rem;">${m.assignmentPrompt}</p>
+                                <textarea class="ws-input" id="assign-input-${m.id}" placeholder="Write your draft here...">${savedText}</textarea>
+                                <div style="margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <button class="btn-outline" onclick="saveAssignment(${m.id})">Save Draft</button>
+                                    <span id="assign-status-${m.id}" style="font-size: 0.82rem; color: var(--success);">${savedText ? 'Saved ✓' : ''}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function checkQuiz(modId) {
+            const mod = MODULES_DATA.find(m => m.id === modId);
+            const selected = document.querySelector(`input[name="quiz-${modId}"]:checked`);
+            const fb = document.getElementById(`quiz-fb-${modId}`);
+
+            if (!selected) {
+                fb.style.color = "var(--danger)";
+                fb.innerText = "Please select an option first.";
+                return;
+            }
+
+            if (parseInt(selected.value) === mod.quiz.correct) {
+                fb.style.color = "var(--success)";
+                fb.innerText = "✓ Correct! " + mod.quiz.explanation;
+                document.getElementById(`mod-badge-${modId}`).className = "badge badge-done";
+                document.getElementById(`mod-badge-${modId}`).innerText = "✓ Completed";
+
+                if (currentUser) {
+                    currentUser.completedQuizzes = currentUser.completedQuizzes || {};
+                    currentUser.completedQuizzes[modId] = true;
+                    syncUserRecord();
+                    updateProgressUI();
+                }
+            } else {
+                fb.style.color = "var(--danger)";
+                fb.innerText = "Not quite—review the module rule and try again.";
+            }
+        }
+
+        function saveAssignment(modId) {
+            const text = document.getElementById(`assign-input-${modId}`).value;
+            if (currentUser) {
+                currentUser.assignments = currentUser.assignments || {};
+                currentUser.assignments[modId] = text;
+                syncUserRecord();
+            }
+            const status = document.getElementById(`assign-status-${modId}`);
+            status.innerText = "Saved ✓";
+        }
+
+        function updateProgressUI() {
+            const completedCount = (currentUser && currentUser.completedQuizzes)
+                ? Object.keys(currentUser.completedQuizzes).length
+                : 0;
+            const pct = Math.round((completedCount / MODULES_DATA.length) * 100);
+            document.getElementById('progress-text').innerText = `${completedCount}/${MODULES_DATA.length} Modules (${pct}%)`;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+        }
+
+        function renderChecklist() {
+            const tbody = document.getElementById('checklist-tbody');
+            tbody.innerHTML = '';
+            CHECKLIST_ITEMS.forEach((item, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${item.area}</strong></td>
+                        <td>${item.text}</td>
+                        <td>
+                            <select class="checklist-select" id="chk-${idx}" onchange="calculateChecklistScore()" style="width:100%; padding:0.4rem; border-radius:4px; border:1px solid #ccc;">
+                                <option value="0">0 — Not met</option>
+                                <option value="1">1 — Partly met</option>
+                                <option value="2">2 — Fully met</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function calculateChecklistScore() {
+            let total = 0;
+            const scores = [];
+            CHECKLIST_ITEMS.forEach((_, idx) => {
+                const val = parseInt(document.getElementById(`chk-${idx}`).value) || 0;
+                total += val;
+                scores.push(val);
+            });
+            const pct = Math.round((total / 34) * 100);
+            let label = "Below 70% — Revise logic first";
+            let color = "var(--danger)";
+            if (pct >= 85) { label = "Strong (85%+ Ready!)"; color = "var(--success)"; }
+            else if (pct >= 70) { label = "70–84% — Needs polish"; color = "var(--warning)"; }
+
+            const badge = document.getElementById('checklist-score-badge');
+            badge.style.color = color;
+            badge.innerText = `Score: ${total} / 34 (${pct}%) — ${label}`;
+
+            safeSetItem('toc_checklist_scores', JSON.stringify(scores));
+        }
+
+        function saveWorksheets() {
+            const data = {};
+            document.querySelectorAll('.ws-field').forEach(el => {
+                data[el.id] = el.value;
+            });
+            safeSetItem('toc_worksheets', JSON.stringify(data));
+            alert("All toolkit worksheets saved in your browser!");
+        }
+
+        function loadWorksheets() {
+            const data = JSON.parse(safeGetItem('toc_worksheets')) || {};
+            Object.entries(data).forEach(([id, val]) => {
+                const el = document.getElementById(id);
+                if (el) el.value = val;
+            });
+            const scores = JSON.parse(safeGetItem('toc_checklist_scores')) || [];
+            scores.forEach((val, idx) => {
+                const el = document.getElementById(`chk-${idx}`);
+                if (el) el.value = val;
+            });
+            if (scores.length) calculateChecklistScore();
+        }
+
+        function switchDashTab(tab) {
+            stopAudioNarration();
+            const tabs = ['modules', 'ppt', 'audio', 'tools', 'icons', 'handouts', 'handwritten', 'infographics', 'flashcards', 'mindmaps', 'external', 'quizzes', 'text', 'downloads', 'worksheets'];
+            tabs.forEach(t => {
+                const panel = document.getElementById('dash-tab-' + t);
+                const btn = document.getElementById('tab-btn-' + t);
+                if (panel) panel.classList.toggle('hidden', t !== tab);
+                if (btn) btn.classList.toggle('active', t === tab);
+            });
+            if (tab === 'ppt') renderPptSlide();
+            if (tab === 'audio') renderAudioNotesTab();
+            if (tab === 'tools') renderToolsTab();
+            if (tab === 'icons') renderIconsTab();
+            if (tab === 'handouts') renderHandoutsTab();
+            if (tab === 'handwritten') renderHandwrittenNotesTab();
+            if (tab === 'infographics') renderInfographicsTab();
+            if (tab === 'flashcards') renderFlashcards();
+            if (tab === 'mindmaps') renderMindMapsTab();
+            if (tab === 'external') renderExternalResourcesTab();
+            if (tab === 'quizzes') renderQuizBankTab();
+            if (tab === 'text') renderFullCourseTextTab();
+        }
+
+        function showView(viewId) {
+            const views = ['landing', 'register', 'pending', 'course', 'certificate-prompt', 'certificate', 'admin'];
+            views.forEach(v => document.getElementById('view-' + v).classList.add('hidden'));
+            document.getElementById('view-' + viewId).classList.remove('hidden');
+        }
+
+        function syncUserRecord() {
+            if (!currentUser) return;
+            const idx = users.findIndex(u => u.id === currentUser.id);
+            if (idx !== -1) users[idx] = currentUser;
+            saveData();
+        }
+
+        function saveData() {
+            safeSetItem('toc_config', JSON.stringify(config));
+            safeSetItem('toc_users', JSON.stringify(users));
+            safeSetItem('toc_currentUser', JSON.stringify(currentUser));
+        }
+
+        function showAdminLogin() {
+            if (isAdmin) {
+                showView('admin');
+                renderAdminData();
+                return;
+            }
+            const code = prompt("Enter Admin Code:");
+            if (code === ADMIN_CODE) {
+                isAdmin = true;
+                showView('admin');
+                renderAdminData();
+            } else if (code !== null) {
+                alert("Access Denied: Invalid Admin Code.");
+            }
+        }
+
+        function renderAdminData() {
+            const totalCount = users.length;
+            const approvedRegUsers = users.filter(u => u.regApproved);
+            const approvedCertUsers = users.filter(u => u.certApproved);
+
+            let revETB = 0;
+            let revUSD = 0;
+
+            approvedRegUsers.forEach(u => {
+                if (u.regCurrency === 'USD') revUSD += Number(config.regUSD);
+                else revETB += Number(config.regETB);
+            });
+
+            approvedCertUsers.forEach(u => {
+                if (u.certCurrency === 'USD') revUSD += Number(config.certUSD);
+                else revETB += Number(config.certETB);
+            });
+
+            document.getElementById('total-regs').innerText = totalCount;
+            document.getElementById('approved-regs').innerText = approvedRegUsers.length;
+            document.getElementById('total-certs').innerText = approvedCertUsers.length;
+            document.getElementById('total-rev-etb').innerText = revETB.toLocaleString();
+            document.getElementById('total-rev-usd').innerText = revUSD.toFixed(2);
+
+            const tbody = document.getElementById('admin-student-list');
+            tbody.innerHTML = '';
+
+            users.forEach(u => {
+                const regStatusHtml = u.regApproved
+                    ? `<span class="badge badge-done">✓ Approved</span>`
+                    : `<button class="btn-approve" onclick="adminApproveStudent('${u.id}', 'reg')">Approve Course</button>`;
+
+                let certStatusHtml = `<span style="color:#777;">Not requested</span>`;
+                if (u.certApproved) {
+                    certStatusHtml = `<span class="badge badge-done">✓ Approved</span>`;
+                } else if (u.certPendingApproval) {
+                    certStatusHtml = `<button class="btn-approve" onclick="adminApproveStudent('${u.id}', 'cert')">Approve Cert</button>`;
+                }
+
+                const isCertActive = u.certApproved && u.certPendingApproval;
+                const activeScope = isCertActive ? 'cert' : 'course';
+                const generatedLink = (isCertActive || u.regApproved) ? buildApprovedLink(u, activeScope) : '';
+                const activeLinkHtml = generatedLink
+                    ? `<a href="${generatedLink}" style="color:var(--primary); text-decoration:underline;">Open Approved Link</a><br><button class="btn-outline" style="margin-top:0.35rem; font-size:0.78rem; padding:0.25rem 0.55rem;" onclick="copyApprovedLink(${JSON.stringify(generatedLink)})">Copy Shareable Link</button>`
+                    : 'Awaiting approval';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${u.name}</strong><br><span style="color:#666;">${u.phone} | ${u.email}</span></td>
+                        <td>Reg: ${u.regMethod} (${u.regAmount})<br><span style="color:#666;">Ref: ${u.regTxRef || 'N/A'}</span>${u.certPendingApproval ? `<br>Cert: ${u.certMethod} (${u.certAmount})` : ''}</td>
+                        <td>${regStatusHtml}</td>
+                        <td>${certStatusHtml}</td>
+                        <td style="word-break:break-all; max-width:250px;">${activeLinkHtml}</td>
+                    </tr>
+                `;
+            });
+
+            const smsContainer = document.getElementById('admin-sms-list');
+            if (!smsAlerts.length) {
+                smsContainer.innerHTML = `<p style="color:#666; margin-top:0.4rem;">No payment SMS alerts recorded yet.</p>`;
+            } else {
+                smsContainer.innerHTML = smsAlerts.map(s => `
+                    <div class="sms-item">
+                        <strong>To ${s.to}</strong> <span style="color:#777;">(${s.time})</span><br>
+                        <span>${s.message}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateAdminSettings() {
+            config.regETB = parseFloat(document.getElementById('admin-reg-etb').value) || 0;
+            config.regUSD = parseFloat(document.getElementById('admin-reg-usd').value) || 0;
+            config.certETB = parseFloat(document.getElementById('admin-cert-etb').value) || 0;
+            config.certUSD = parseFloat(document.getElementById('admin-cert-usd').value) || 0;
+            config.adminPhone = document.getElementById('admin-telebirr-phone').value.trim() || "0917106325";
+            config.certIssuerUrl = document.getElementById('admin-cert-issuer-url').value.trim() || DEFAULT_CERT_ISSUER_URL;
+            config.certLogo = document.getElementById('admin-cert-logo').value.trim() || "MT CONSULTANCY";
+
+            saveData();
+            updateUIWithSettings();
+            alert("Settings updated!");
+            renderAdminData();
+        }
+
+        function logout() {
+            stopAudioNarration();
+            isAdmin = false;
+            currentUser = null;
+            safeRemoveItem('toc_currentUser');
+            showView('landing');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
